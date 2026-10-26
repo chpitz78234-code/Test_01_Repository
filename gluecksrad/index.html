@@ -168,7 +168,7 @@
     text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
   }
 
-  .wheel-wrap { position: relative; width: min(100%, 500px, 46vh); aspect-ratio: 1; max-width: 100%; margin-top: 6px; }
+  .wheel-wrap { position: relative; width: min(100%, 520px, 54vh); aspect-ratio: 1; max-width: 100%; margin-top: 6px; container-type: inline-size; }
   .wheel-wrap canvas { width: 100%; height: 100%; display: block; }
   .pointer {
     position: absolute;
@@ -182,18 +182,39 @@
   }
   .pointer svg { display: block; width: 100%; height: auto; }
 
-  .result { min-height: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .result { min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
   .status { margin: 0; color: var(--muted); font-weight: 600; }
-  .winner { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Gewinnerscheibe in der Mitte des Rads */
+  .winner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 54%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    padding: 9%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+    background: radial-gradient(circle at 38% 30%, var(--stage-hi), var(--stage) 72%);
+    box-shadow: 0 0 0 6px var(--gold), 0 0 0 10px var(--gold-deep), 0 12px 34px rgba(0, 0, 0, 0.55);
+  }
+  .winner .eyebrow { font-size: clamp(0.6rem, 2.6cqw, 0.8rem); color: var(--gold); }
   .winner-name {
+    width: 100%;
     font-family: var(--display);
     font-weight: 400;
     margin: 0;
-    font-size: clamp(2rem, 7vw, 3.6rem);
+    font-size: 10cqw;
     line-height: 1.05;
     color: var(--cream);
-    overflow-wrap: anywhere;
-    text-shadow: 0 0 24px rgba(255, 201, 74, 0.55), 0 3px 0 rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 18px rgba(255, 201, 74, 0.55), 0 3px 0 rgba(0, 0, 0, 0.4);
   }
   .winner.pop { animation: pop 520ms cubic-bezier(0.2, 1.4, 0.4, 1) both; }
   @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -279,14 +300,15 @@
       <div class="pointer" id="pointer" aria-hidden="true">
         <svg viewBox="0 0 40 52"><path d="M20 52 L4 18 A17 17 0 1 1 36 18 Z" fill="#fff3d6" stroke="#b97a14" stroke-width="3"/><circle cx="20" cy="17" r="6" fill="#e63946"/></svg>
       </div>
-    </div>
-
-    <div class="result" aria-live="polite">
-      <p class="status" id="status">Das Rad dreht sich …</p>
       <div class="winner" id="winner" hidden>
         <p class="eyebrow">Gewonnen hat</p>
         <p class="winner-name" id="winner-name"></p>
       </div>
+    </div>
+
+    <div class="result">
+      <p class="status" id="status">Das Rad dreht sich …</p>
+      <span class="sr-only" id="announce" aria-live="polite"></span>
       <div class="game-actions">
         <button type="button" class="btn-primary" id="next-btn" hidden>Nächste Kategorie</button>
       </div>
@@ -464,9 +486,11 @@
   const canvas = $("wheel");
   const ctx = canvas.getContext("2d");
   const pointer = $("pointer");
+  // Die Namen bleiben verborgen: das Rad zeigt nur Farbfelder, gezogen wird aus der Namensliste
+  const SEGMENTS = 16;
+  const SPIN_MS = 5000;
   let size = 0;
   let names = [];
-  let colors = [];
   let rotation = 0;
   let spin = null; // { from, to, start, duration, winner }
   let lastIdx = -1;
@@ -480,6 +504,7 @@
     if (n > 1 && n % L === 1) list[n - 1] = PALETTE[1];
     return list;
   }
+  const colors = colorsFor(SEGMENTS);
 
   function resizeWheel() {
     const rect = canvas.getBoundingClientRect();
@@ -489,14 +514,20 @@
     canvas.height = Math.round(rect.width * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     draw(performance.now());
+    if (!$("winner").hidden) fitWinnerName();
   }
   new ResizeObserver(resizeWheel).observe($("wheel-wrap"));
 
-  function fitText(text, maxW) {
-    if (ctx.measureText(text).width <= maxW) return text;
-    let t = text;
-    while (t.length > 1 && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
-    return t + "…";
+  // Schriftgröße verkleinern, bis der Name in die Mittelscheibe passt
+  function fitWinnerName() {
+    const disc = $("winner");
+    const el = $("winner-name");
+    let fs = size * 0.1;
+    el.style.fontSize = `${fs}px`;
+    while (fs > 10 && (el.scrollWidth > el.clientWidth || disc.scrollHeight > disc.clientHeight)) {
+      fs -= 1;
+      el.style.fontSize = `${fs}px`;
+    }
   }
 
   function draw(now) {
@@ -504,7 +535,7 @@
     const c = size / 2;
     const R = c * 0.97;
     const r = R * 0.86;
-    const n = Math.max(names.length, 1);
+    const n = SEGMENTS;
     const seg = TAU / n;
     ctx.clearRect(0, 0, size, size);
 
@@ -545,30 +576,11 @@
       ctx.moveTo(c, c);
       ctx.arc(c, c, r, start, start + seg);
       ctx.closePath();
-      ctx.fillStyle = names.length ? colors[i].bg : "#2a3285";
+      ctx.fillStyle = colors[i].bg;
       ctx.fill();
-      if (n > 1) {
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
-        ctx.lineWidth = Math.max(1, size / 400);
-        ctx.stroke();
-      }
-    }
-
-    // Namen
-    if (names.length) {
-      const fs = Math.max(9, Math.min(r * 0.11, seg * r * 0.62 * 0.6));
-      ctx.font = `800 ${fs}px Figtree, system-ui, sans-serif`;
-      ctx.textAlign = "right";
-      ctx.textBaseline = "middle";
-      for (let i = 0; i < n; i++) {
-        const mid = rotation + (i + 0.5) * seg - Math.PI / 2;
-        ctx.save();
-        ctx.translate(c, c);
-        ctx.rotate(mid);
-        ctx.fillStyle = colors[i].fg;
-        ctx.fillText(fitText(names[i], r * 0.66), r * 0.9, 0);
-        ctx.restore();
-      }
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+      ctx.lineWidth = Math.max(1, size / 400);
+      ctx.stroke();
     }
 
     // Innenring-Schatten und Nabe
@@ -594,9 +606,7 @@
   }
 
   function indexAtPointer() {
-    const n = names.length;
-    if (!n) return -1;
-    return Math.floor(mod(-rotation, TAU) / (TAU / n)) % n;
+    return Math.floor(mod(-rotation, TAU) / (TAU / SEGMENTS)) % SEGMENTS;
   }
 
   function flickPointer() {
@@ -629,19 +639,18 @@
   function stopLoop() { cancelAnimationFrame(loopId); loopId = 0; spin = null; }
 
   function spinWheel() {
-    const n = names.length;
-    const seg = TAU / n;
-    const winner = randInt(n);
-    // Zielpunkt zufällig innerhalb des Gewinnersegments, nicht direkt auf der Kante
-    const local = (winner + 0.15 + random() * 0.7) * seg;
+    const seg = TAU / SEGMENTS;
+    const winner = randInt(names.length);
+    // Das Rad hält an einer zufälligen Stelle, nicht direkt auf einer Feldkante
+    const local = (randInt(SEGMENTS) + 0.15 + random() * 0.7) * seg;
     const delta = mod(mod(-local, TAU) - mod(rotation, TAU), TAU);
-    const turns = reducedMotion ? 1 : 6 + randInt(3);
+    const turns = reducedMotion ? 1 : 5 + randInt(2);
     lastIdx = indexAtPointer();
     spin = {
       from: rotation,
       to: rotation + delta + turns * TAU,
       start: performance.now(),
-      duration: reducedMotion ? 1500 : 5600 + random() * 1600,
+      duration: SPIN_MS,
       winner,
     };
   }
@@ -674,11 +683,11 @@
   function beginRound(i) {
     current = i;
     names = parseNames(settings.cats[i].names);
-    colors = colorsFor(names.length);
     $("game-eyebrow").textContent = `Kategorie ${i + 1} von 3`;
     $("game-title").textContent = titleOf(i);
     $("status").hidden = false;
     $("status").textContent = "Das Rad dreht sich …";
+    $("announce").textContent = "";
     $("winner").hidden = true;
     $("winner").classList.remove("pop");
     $("next-btn").hidden = true;
@@ -694,7 +703,9 @@
     winners[current] = { title: titleOf(current), name };
     $("status").hidden = true;
     $("winner-name").textContent = name;
+    $("announce").textContent = `Gewonnen hat ${name}`;
     $("winner").hidden = false;
+    fitWinnerName();
     void $("winner").offsetWidth; // Animation neu starten
     $("winner").classList.add("pop");
     const next = $("next-btn");
