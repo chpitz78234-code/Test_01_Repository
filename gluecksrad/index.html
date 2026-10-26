@@ -10,17 +10,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Figtree:wght@400;600;700;800&display=swap">
 <style>
   /* Layout: eine Showbühne in drei Akten – Eingabetafel, Glücksrad im Spotlight, Siegertafel */
+  /* Farbschema: Violett #5B09B8, Weiß #FFFFFF, Schwarz #121212 (plus Abstufungen davon) */
   :root {
-    --stage: #141846;
-    --stage-hi: #2a3285;
-    --panel: #1d2262;
-    --well: #0f1238;
-    --gold: #ffc94a;
-    --gold-deep: #b97a14;
-    --on-gold: #2b1700;
-    --cream: #fff3d6;
-    --muted: #b3b8e6;
-    --line: rgba(255, 243, 214, 0.16);
+    --stage: #121212;
+    --stage-hi: rgba(91, 9, 184, 0.42);
+    --panel: #1b1720;
+    --well: #0b0b0b;
+    --violet: #5b09b8;
+    --violet-deep: #3a0678;
+    --violet-light: #b58cf0;
+    --white: #ffffff;
+    --muted: #b2abbd;
+    --line: rgba(255, 255, 255, 0.14);
     --alert: #ff9b8f;
     --display: "Bungee", "Arial Black", Impact, sans-serif;
     --body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -35,7 +36,7 @@
     background-color: var(--stage);
     background-image: radial-gradient(ellipse 70% 55% at 50% 0%, var(--stage-hi), transparent 72%);
     background-repeat: no-repeat;
-    color: var(--cream);
+    color: var(--white);
     font-family: var(--body);
     font-size: 16px;
     line-height: 1.5;
@@ -54,39 +55,39 @@
 
   /* Kopfzeile */
   .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .brand { font-family: var(--display); font-size: 1.35rem; letter-spacing: 0.02em; color: var(--gold); margin: 0; }
-  .brand span { color: var(--cream); }
+  .brand { font-family: var(--display); font-size: 1.35rem; letter-spacing: 0.02em; color: var(--white); margin: 0; }
+  .brand span { color: var(--violet-light); }
 
   h2, h3 { text-wrap: balance; margin: 0; }
   .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; font-weight: 700; color: var(--muted); margin: 0; }
 
   /* Buttons */
   button { font: inherit; cursor: pointer; }
-  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--violet-light); outline-offset: 2px; }
   .btn-primary {
     font-family: var(--display);
     font-size: 1.2rem;
     letter-spacing: 0.03em;
-    background: var(--gold);
-    color: var(--on-gold);
+    background: var(--violet);
+    color: var(--white);
     border: 0;
     border-radius: 999px;
     padding: 14px 32px;
-    box-shadow: 0 5px 0 var(--gold-deep);
+    box-shadow: 0 5px 0 var(--violet-deep);
     transition: transform 80ms ease, box-shadow 80ms ease;
   }
-  .btn-primary:hover { filter: brightness(1.06); }
-  .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-deep); }
+  .btn-primary:hover { filter: brightness(1.15); }
+  .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--violet-deep); }
   .btn-ghost {
     background: transparent;
-    color: var(--cream);
+    color: var(--white);
     border: 1px solid var(--line);
     border-radius: 999px;
     padding: 8px 16px;
     font-weight: 600;
     font-size: 0.9rem;
   }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-ghost:hover { border-color: var(--violet-light); color: var(--violet-light); }
 
   /* Eingabe */
   .setup { display: flex; flex-direction: column; gap: 20px; }
@@ -114,15 +115,15 @@
     border-radius: 50%;
     display: grid; place-items: center;
     font-family: var(--display);
-    background: var(--gold);
-    color: var(--on-gold);
+    background: var(--violet);
+    color: var(--white);
   }
   label { font-size: 0.8rem; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
   .field { display: flex; flex-direction: column; gap: 4px; }
   input[type="text"], textarea {
     width: 100%;
     background: var(--well);
-    color: var(--cream);
+    color: var(--white);
     border: 1px solid var(--line);
     border-radius: 10px;
     padding: 10px 12px;
@@ -152,20 +153,20 @@
     color: var(--muted);
   }
   .rounds li > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .rounds .r-title { font-weight: 700; color: var(--cream); }
+  .rounds .r-title { font-weight: 700; color: var(--white); }
   .rounds .r-win { font-weight: 800; }
-  .rounds li.current { border-color: var(--gold); background: rgba(255, 201, 74, 0.08); }
-  .rounds li.done .r-win { color: var(--gold); }
+  .rounds li.current { border-color: var(--violet-light); background: rgba(91, 9, 184, 0.28); }
+  .rounds li.done .r-win { color: var(--violet-light); }
 
   .cat-title {
     font-family: var(--display);
     font-weight: 400;
-    color: var(--gold);
+    color: var(--white);
     font-size: clamp(1.7rem, 5.5vw, 3.1rem);
     line-height: 1.05;
     max-width: 100%;
     overflow-wrap: anywhere;
-    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+    text-shadow: 0 4px 0 var(--violet);
   }
 
   .wheel-wrap { position: relative; width: min(100%, 520px, 54vh); aspect-ratio: 1; max-width: 100%; margin-top: 6px; container-type: inline-size; }
@@ -202,10 +203,10 @@
     justify-content: center;
     gap: 2px;
     text-align: center;
-    background: radial-gradient(circle at 38% 30%, var(--stage-hi), var(--stage) 72%);
-    box-shadow: 0 0 0 6px var(--gold), 0 0 0 10px var(--gold-deep), 0 12px 34px rgba(0, 0, 0, 0.55);
+    background: radial-gradient(circle at 38% 30%, var(--violet), var(--violet-deep) 60%, var(--stage) 100%);
+    box-shadow: 0 0 0 6px var(--white), 0 0 0 10px var(--violet), 0 12px 34px rgba(0, 0, 0, 0.6);
   }
-  .winner .eyebrow { font-size: clamp(0.6rem, 2.6cqw, 0.8rem); color: var(--gold); }
+  .winner .eyebrow { font-size: clamp(0.6rem, 2.6cqw, 0.8rem); color: var(--violet-light); }
   .winner-name {
     width: 100%;
     font-family: var(--display);
@@ -213,8 +214,8 @@
     margin: 0;
     font-size: 10cqw;
     line-height: 1.05;
-    color: var(--cream);
-    text-shadow: 0 0 18px rgba(255, 201, 74, 0.55), 0 3px 0 rgba(0, 0, 0, 0.4);
+    color: var(--white);
+    text-shadow: 0 0 18px rgba(181, 140, 240, 0.6), 0 3px 0 rgba(0, 0, 0, 0.45);
   }
   .winner.pop { animation: pop 520ms cubic-bezier(0.2, 1.4, 0.4, 1) both; }
   @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -222,7 +223,7 @@
 
   /* Ergebnisse */
   .results { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
-  .results h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.8rem, 5vw, 3rem); color: var(--gold); }
+  .results h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.8rem, 5vw, 3rem); color: var(--white); text-shadow: 0 4px 0 var(--violet); }
   .board { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 10px; }
   .board li {
     display: grid;
@@ -298,7 +299,7 @@
     <div class="wheel-wrap" id="wheel-wrap">
       <canvas id="wheel" role="img" aria-label="Glücksrad"></canvas>
       <div class="pointer" id="pointer" aria-hidden="true">
-        <svg viewBox="0 0 40 52"><path d="M20 52 L4 18 A17 17 0 1 1 36 18 Z" fill="#fff3d6" stroke="#b97a14" stroke-width="3"/><circle cx="20" cy="17" r="6" fill="#e63946"/></svg>
+        <svg viewBox="0 0 40 52"><path d="M20 52 L4 18 A17 17 0 1 1 36 18 Z" fill="#ffffff" stroke="#3a0678" stroke-width="3"/><circle cx="20" cy="17" r="6" fill="#5b09b8"/></svg>
       </div>
       <div class="winner" id="winner" hidden>
         <p class="eyebrow">Gewonnen hat</p>
@@ -335,16 +336,12 @@
   const STORE_KEY = "gluecksrad-ziehung-v1";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Segmentfarben mit passender Schriftfarbe für guten Kontrast
+  // Segmentfarben aus dem Farbschema: Violett, Weiß und zwei Violett-Abstufungen
   const PALETTE = [
-    { bg: "#e63946", fg: "#ffffff" },
-    { bg: "#ffb627", fg: "#2b1700" },
-    { bg: "#2a9d8f", fg: "#ffffff" },
-    { bg: "#ff5da2", fg: "#2b0a1c" },
-    { bg: "#3a86ff", fg: "#ffffff" },
-    { bg: "#8ac926", fg: "#14220a" },
-    { bg: "#8338ec", fg: "#ffffff" },
-    { bg: "#ff7f11", fg: "#2b1300" },
+    { bg: "#5b09b8" },
+    { bg: "#ffffff" },
+    { bg: "#2e0560" },
+    { bg: "#9d63ee" },
   ];
 
   const DEFAULTS = {
@@ -539,12 +536,12 @@
     const seg = TAU / n;
     ctx.clearRect(0, 0, size, size);
 
-    // Goldener Rahmen
+    // Violetter Rahmen
     const rim = ctx.createRadialGradient(c, c, r, c, c, R);
-    rim.addColorStop(0, "#7a4a0c");
-    rim.addColorStop(0.35, "#ffc94a");
-    rim.addColorStop(0.75, "#e6a52c");
-    rim.addColorStop(1, "#8a560f");
+    rim.addColorStop(0, "#22043f");
+    rim.addColorStop(0.35, "#6f1ad0");
+    rim.addColorStop(0.75, "#5b09b8");
+    rim.addColorStop(1, "#2a0552");
     ctx.beginPath();
     ctx.arc(c, c, R, 0, TAU);
     ctx.fillStyle = rim;
@@ -561,8 +558,8 @@
       const on = reducedMotion || (k + phase) % 2 === 0;
       ctx.beginPath();
       ctx.arc(x, y, (R - r) * 0.22, 0, TAU);
-      ctx.fillStyle = on ? "#fff8d8" : "#9c6a1c";
-      ctx.shadowColor = on ? "rgba(255, 220, 120, 0.95)" : "transparent";
+      ctx.fillStyle = on ? "#ffffff" : "#3a0678";
+      ctx.shadowColor = on ? "rgba(255, 255, 255, 0.9)" : "transparent";
       ctx.shadowBlur = on ? 10 : 0;
       ctx.fill();
     }
@@ -578,7 +575,7 @@
       ctx.closePath();
       ctx.fillStyle = colors[i].bg;
       ctx.fill();
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+      ctx.strokeStyle = "rgba(18, 18, 18, 0.35)";
       ctx.lineWidth = Math.max(1, size / 400);
       ctx.stroke();
     }
@@ -592,16 +589,16 @@
 
     const hubR = r * 0.15;
     const hub = ctx.createRadialGradient(c - hubR * 0.3, c - hubR * 0.3, hubR * 0.1, c, c, hubR);
-    hub.addColorStop(0, "#fff3c4");
-    hub.addColorStop(0.6, "#ffc94a");
-    hub.addColorStop(1, "#b97a14");
+    hub.addColorStop(0, "#ffffff");
+    hub.addColorStop(0.6, "#e6daf8");
+    hub.addColorStop(1, "#9d63ee");
     ctx.beginPath();
     ctx.arc(c, c, hubR, 0, TAU);
     ctx.fillStyle = hub;
     ctx.fill();
     ctx.beginPath();
     ctx.arc(c, c, hubR * 0.55, 0, TAU);
-    ctx.fillStyle = "#141846";
+    ctx.fillStyle = "#121212";
     ctx.fill();
   }
 
@@ -789,7 +786,7 @@
     cv.width = Math.round(w * dpr);
     cv.height = Math.round(h * dpr);
     cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const colorsAll = PALETTE.map((p) => p.bg).concat(["#ffc94a", "#fff3d6"]);
+    const colorsAll = PALETTE.map((p) => p.bg).concat(["#ffffff", "#b58cf0"]);
     for (let i = 0; i < 170; i++) {
       parts.push({
         x: w / 2 + (random() - 0.5) * Math.min(w, 600) * 0.5,
