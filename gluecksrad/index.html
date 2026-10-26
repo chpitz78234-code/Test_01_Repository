@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glücksrad-Ziehung</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Figtree:wght@400;600;700;800&display=swap">
+<style>
+  /* Layout: eine Showbühne in drei Akten – Eingabetafel, Glücksrad im Spotlight, Siegertafel */
+  :root {
+    --stage: #141846;
+    --stage-hi: #2a3285;
+    --panel: #1d2262;
+    --well: #0f1238;
+    --gold: #ffc94a;
+    --gold-deep: #b97a14;
+    --on-gold: #2b1700;
+    --cream: #fff3d6;
+    --muted: #b3b8e6;
+    --line: rgba(255, 243, 214, 0.16);
+    --alert: #ff9b8f;
+    --display: "Bungee", "Arial Black", Impact, sans-serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0;
+    background-color: var(--stage);
+    background-image: radial-gradient(ellipse 70% 55% at 50% 0%, var(--stage-hi), transparent 72%);
+    background-repeat: no-repeat;
+    color: var(--cream);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .app {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-block: 20px 40px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Kopfzeile */
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .brand { font-family: var(--display); font-size: 1.35rem; letter-spacing: 0.02em; color: var(--gold); margin: 0; }
+  .brand span { color: var(--cream); }
+
+  h2, h3 { text-wrap: balance; margin: 0; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; font-weight: 700; color: var(--muted); margin: 0; }
+
+  /* Buttons */
+  button { font: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .btn-primary {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    letter-spacing: 0.03em;
+    background: var(--gold);
+    color: var(--on-gold);
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 32px;
+    box-shadow: 0 5px 0 var(--gold-deep);
+    transition: transform 80ms ease, box-shadow 80ms ease;
+  }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-deep); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Eingabe */
+  .setup { display: flex; flex-direction: column; gap: 20px; }
+  .setup-intro { display: flex; flex-direction: column; gap: 6px; }
+  .setup-intro h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.5rem, 3.4vw, 2.2rem); line-height: 1.15; }
+  .setup-intro p { margin: 0; color: var(--muted); max-width: 60ch; }
+
+  .cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 820px) { .cats { grid-template-columns: minmax(0, 1fr); } }
+
+  .cat {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .cat-head { display: flex; align-items: center; gap: 10px; }
+  .badge {
+    flex: none;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--display);
+    background: var(--gold);
+    color: var(--on-gold);
+  }
+  label { font-size: 0.8rem; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  input[type="text"], textarea {
+    width: 100%;
+    background: var(--well);
+    color: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+  }
+  input[type="text"] { font-weight: 700; font-size: 1.05rem; }
+  textarea { resize: vertical; min-height: 200px; line-height: 1.55; }
+  .cat-foot { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .error { color: var(--alert); font-weight: 700; }
+  .cat.invalid textarea { border-color: var(--alert); }
+
+  .start-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+  .hint { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--muted); font-size: 0.9rem; margin: 0; }
+
+  /* Ziehung */
+  .game { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+
+  .rounds { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 760px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .rounds li {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 6px 10px;
+    display: flex; flex-direction: column;
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .rounds li > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rounds .r-title { font-weight: 700; color: var(--cream); }
+  .rounds .r-win { font-weight: 800; }
+  .rounds li.current { border-color: var(--gold); background: rgba(255, 201, 74, 0.08); }
+  .rounds li.done .r-win { color: var(--gold); }
+
+  .cat-title {
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--gold);
+    font-size: clamp(1.7rem, 5.5vw, 3.1rem);
+    line-height: 1.05;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .wheel-wrap { position: relative; width: min(100%, 500px, 46vh); aspect-ratio: 1; max-width: 100%; margin-top: 6px; }
+  .wheel-wrap canvas { width: 100%; height: 100%; display: block; }
+  .pointer {
+    position: absolute;
+    top: -3%;
+    left: 50%;
+    width: 11%;
+    transform: translateX(-50%);
+    transform-origin: 50% 20%;
+    filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+  }
+  .pointer svg { display: block; width: 100%; height: auto; }
+
+  .result { min-height: 150px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .status { margin: 0; color: var(--muted); font-weight: 600; }
+  .winner { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .winner-name {
+    font-family: var(--display);
+    font-weight: 400;
+    margin: 0;
+    font-size: clamp(2rem, 7vw, 3.6rem);
+    line-height: 1.05;
+    color: var(--cream);
+    overflow-wrap: anywhere;
+    text-shadow: 0 0 24px rgba(255, 201, 74, 0.55), 0 3px 0 rgba(0, 0, 0, 0.4);
+  }
+  .winner.pop { animation: pop 520ms cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+  @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .game-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px; }
+
+  /* Ergebnisse */
+  .results { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+  .results h2 { font-family: var(--display); font-weight: 400; font-size: clamp(1.8rem, 5vw, 3rem); color: var(--gold); }
+  .board { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 10px; }
+  .board li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 18px;
+  }
+  .board .b-cat { color: var(--muted); font-weight: 700; font-size: 0.9rem; overflow-wrap: anywhere; }
+  .board .b-win { font-family: var(--display); font-size: clamp(1.3rem, 4vw, 1.9rem); line-height: 1.1; overflow-wrap: anywhere; }
+
+  #confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .winner.pop { animation: none; }
+    .btn-primary { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <p class="brand">Glücksrad<span>-Ziehung</span></p>
+    <button type="button" class="btn-ghost" id="sound-toggle" aria-pressed="true">Ton: an</button>
+  </header>
+
+  <!-- 1. Eingabe -->
+  <section class="setup" id="screen-setup" aria-labelledby="setup-heading">
+    <div class="setup-intro">
+      <h2 id="setup-heading">Drei Kategorien, drei Gewinner</h2>
+      <p>Benenne jede Kategorie und trage die Vornamen ein, einen pro Zeile. Nach dem Start dreht sich für jede Kategorie ein eigenes Rad.</p>
+    </div>
+
+    <div class="cats">
+      <article class="cat" id="cat-0">
+        <div class="cat-head"><span class="badge" aria-hidden="true">1</span><p class="eyebrow">Erste Runde</p></div>
+        <div class="field"><label for="cat-title-0">Name der Kategorie</label><input type="text" id="cat-title-0" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label for="cat-names-0">Vornamen (einer pro Zeile)</label><textarea id="cat-names-0" rows="9" spellcheck="false"></textarea></div>
+        <div class="cat-foot"><span id="cat-count-0"></span><span class="error" id="cat-error-0" role="alert"></span></div>
+      </article>
+      <article class="cat" id="cat-1">
+        <div class="cat-head"><span class="badge" aria-hidden="true">2</span><p class="eyebrow">Zweite Runde</p></div>
+        <div class="field"><label for="cat-title-1">Name der Kategorie</label><input type="text" id="cat-title-1" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label for="cat-names-1">Vornamen (einer pro Zeile)</label><textarea id="cat-names-1" rows="9" spellcheck="false"></textarea></div>
+        <div class="cat-foot"><span id="cat-count-1"></span><span class="error" id="cat-error-1" role="alert"></span></div>
+      </article>
+      <article class="cat" id="cat-2">
+        <div class="cat-head"><span class="badge" aria-hidden="true">3</span><p class="eyebrow">Dritte Runde</p></div>
+        <div class="field"><label for="cat-title-2">Name der Kategorie</label><input type="text" id="cat-title-2" maxlength="60" autocomplete="off"></div>
+        <div class="field"><label for="cat-names-2">Vornamen (einer pro Zeile)</label><textarea id="cat-names-2" rows="9" spellcheck="false"></textarea></div>
+        <div class="cat-foot"><span id="cat-count-2"></span><span class="error" id="cat-error-2" role="alert"></span></div>
+      </article>
+    </div>
+
+    <div class="start-row">
+      <p class="hint" id="example-hint">Das sind Beispielnamen. Ersetze sie durch deine eigenen.
+        <button type="button" class="btn-ghost" id="clear-examples">Beispielnamen löschen</button>
+      </p>
+      <button type="button" class="btn-primary" id="start-btn">Start</button>
+    </div>
+  </section>
+
+  <!-- 2. Ziehung -->
+  <section class="game" id="screen-game" hidden aria-labelledby="game-title">
+    <ol class="rounds" id="rounds" aria-label="Fortschritt"></ol>
+    <p class="eyebrow" id="game-eyebrow">Kategorie 1 von 3</p>
+    <h2 class="cat-title" id="game-title">Hauptpreis</h2>
+
+    <div class="wheel-wrap" id="wheel-wrap">
+      <canvas id="wheel" role="img" aria-label="Glücksrad"></canvas>
+      <div class="pointer" id="pointer" aria-hidden="true">
+        <svg viewBox="0 0 40 52"><path d="M20 52 L4 18 A17 17 0 1 1 36 18 Z" fill="#fff3d6" stroke="#b97a14" stroke-width="3"/><circle cx="20" cy="17" r="6" fill="#e63946"/></svg>
+      </div>
+    </div>
+
+    <div class="result" aria-live="polite">
+      <p class="status" id="status">Das Rad dreht sich …</p>
+      <div class="winner" id="winner" hidden>
+        <p class="eyebrow">Gewonnen hat</p>
+        <p class="winner-name" id="winner-name"></p>
+      </div>
+      <div class="game-actions">
+        <button type="button" class="btn-primary" id="next-btn" hidden>Nächste Kategorie</button>
+      </div>
+    </div>
+    <button type="button" class="btn-ghost" id="back-btn">Zurück zur Eingabe</button>
+  </section>
+
+  <!-- 3. Ergebnisse -->
+  <section class="results" id="screen-results" hidden aria-labelledby="results-title">
+    <h2 id="results-title">Die Gewinner</h2>
+    <ol class="board" id="board"></ol>
+    <div class="game-actions">
+      <button type="button" class="btn-primary" id="again-btn">Noch einmal ziehen</button>
+      <button type="button" class="btn-ghost" id="edit-btn">Namen bearbeiten</button>
+    </div>
+  </section>
+</div>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+(() => {
+  const TAU = Math.PI * 2;
+  const STORE_KEY = "gluecksrad-ziehung-v1";
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Segmentfarben mit passender Schriftfarbe für guten Kontrast
+  const PALETTE = [
+    { bg: "#e63946", fg: "#ffffff" },
+    { bg: "#ffb627", fg: "#2b1700" },
+    { bg: "#2a9d8f", fg: "#ffffff" },
+    { bg: "#ff5da2", fg: "#2b0a1c" },
+    { bg: "#3a86ff", fg: "#ffffff" },
+    { bg: "#8ac926", fg: "#14220a" },
+    { bg: "#8338ec", fg: "#ffffff" },
+    { bg: "#ff7f11", fg: "#2b1300" },
+  ];
+
+  const DEFAULTS = {
+    example: true,
+    sound: true,
+    cats: [
+      { title: "Hauptpreis", names: "Anna\nBen\nClara\nDavid\nElif\nFinn\nGreta\nHamza" },
+      { title: "Trostpreis", names: "Ida\nJonas\nKaya\nLeon\nMila\nNoah" },
+      { title: "Sonderpreis", names: "Olivia\nPaul\nRosa\nSamuel\nTara\nUgur\nVera" },
+    ],
+  };
+
+  // ---------- Speicher (nur im eigenen Browser) ----------
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (data && Array.isArray(data.cats) && data.cats.length === 3) return data;
+      }
+    } catch (e) { /* ohne Speicher weiter */ }
+    return JSON.parse(JSON.stringify(DEFAULTS));
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(settings)); } catch (e) { /* ignorieren */ }
+  }
+
+  const settings = load();
+  const $ = (id) => document.getElementById(id);
+
+  const parseNames = (text) => text.split(/[\n,;]+/).map((s) => s.trim()).filter(Boolean);
+  const titleOf = (i) => settings.cats[i].title.trim() || `Kategorie ${i + 1}`;
+
+  // ---------- Zufall ----------
+  function random() {
+    if (window.crypto && crypto.getRandomValues) {
+      const buf = new Uint32Array(1);
+      crypto.getRandomValues(buf);
+      return buf[0] / 4294967296;
+    }
+    return Math.random();
+  }
+  const randInt = (n) => Math.floor(random() * n);
+  const mod = (a, n) => ((a % n) + n) % n;
+
+  // ---------- Ton ----------
+  let actx = null;
+  function ensureAudio() {
+    if (!actx) {
+      try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { actx = null; }
+    }
+    if (actx && actx.state === "suspended") actx.resume().catch(() => {});
+  }
+  function tone(freq, dur, type, vol, when = 0) {
+    if (!actx || !settings.sound) return;
+    const t = actx.currentTime + when;
+    const osc = actx.createOscillator();
+    const gain = actx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(gain).connect(actx.destination);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
+  }
+  const tick = () => tone(1500, 0.035, "square", 0.025);
+  const fanfare = () => [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, i === 3 ? 0.7 : 0.25, "triangle", 0.09, i * 0.12));
+
+  function renderSound() {
+    const btn = $("sound-toggle");
+    btn.textContent = settings.sound ? "Ton: an" : "Ton: aus";
+    btn.setAttribute("aria-pressed", String(settings.sound));
+  }
+  $("sound-toggle").addEventListener("click", () => {
+    settings.sound = !settings.sound;
+    if (settings.sound) ensureAudio();
+    renderSound();
+    save();
+  });
+
+  // ---------- Eingabe ----------
+  function countLabel(n) {
+    if (n === 0) return "Noch keine Namen";
+    return n === 1 ? "1 Name" : `${n} Namen`;
+  }
+  function refreshCount(i) {
+    $(`cat-count-${i}`).textContent = countLabel(parseNames(settings.cats[i].names).length);
+  }
+  function clearError(i) {
+    $(`cat-error-${i}`).textContent = "";
+    $(`cat-${i}`).classList.remove("invalid");
+  }
+  function renderHint() { $("example-hint").hidden = !settings.example; }
+
+  for (let i = 0; i < 3; i++) {
+    const titleEl = $(`cat-title-${i}`);
+    const namesEl = $(`cat-names-${i}`);
+    titleEl.value = settings.cats[i].title;
+    namesEl.value = settings.cats[i].names;
+    titleEl.placeholder = `Kategorie ${i + 1}`;
+    namesEl.placeholder = "Vorname\nVorname\nVorname";
+    refreshCount(i);
+    titleEl.addEventListener("input", () => { settings.cats[i].title = titleEl.value; save(); });
+    namesEl.addEventListener("input", () => {
+      settings.cats[i].names = namesEl.value;
+      settings.example = false;
+      refreshCount(i);
+      clearError(i);
+      renderHint();
+      save();
+    });
+  }
+  renderHint();
+  renderSound();
+
+  $("clear-examples").addEventListener("click", () => {
+    for (let i = 0; i < 3; i++) {
+      settings.cats[i].names = "";
+      $(`cat-names-${i}`).value = "";
+      refreshCount(i);
+    }
+    settings.example = false;
+    renderHint();
+    save();
+    $("cat-names-0").focus();
+  });
+
+  // ---------- Bildschirme ----------
+  function show(name) {
+    $("screen-setup").hidden = name !== "setup";
+    $("screen-game").hidden = name !== "game";
+    $("screen-results").hidden = name !== "results";
+    window.scrollTo(0, 0);
+    if (name === "game") startLoop(); else stopLoop();
+  }
+
+  // ---------- Glücksrad ----------
+  const canvas = $("wheel");
+  const ctx = canvas.getContext("2d");
+  const pointer = $("pointer");
+  let size = 0;
+  let names = [];
+  let colors = [];
+  let rotation = 0;
+  let spin = null; // { from, to, start, duration, winner }
+  let lastIdx = -1;
+  let loopId = 0;
+
+  function colorsFor(n) {
+    const L = PALETTE.length;
+    const list = [];
+    for (let i = 0; i < n; i++) list.push(PALETTE[i % L]);
+    // Letztes Segment darf nicht dieselbe Farbe wie das erste haben
+    if (n > 1 && n % L === 1) list[n - 1] = PALETTE[1];
+    return list;
+  }
+
+  function resizeWheel() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    size = rect.width;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.width * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw(performance.now());
+  }
+  new ResizeObserver(resizeWheel).observe($("wheel-wrap"));
+
+  function fitText(text, maxW) {
+    if (ctx.measureText(text).width <= maxW) return text;
+    let t = text;
+    while (t.length > 1 && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
+    return t + "…";
+  }
+
+  function draw(now) {
+    if (!size) return;
+    const c = size / 2;
+    const R = c * 0.97;
+    const r = R * 0.86;
+    const n = Math.max(names.length, 1);
+    const seg = TAU / n;
+    ctx.clearRect(0, 0, size, size);
+
+    // Goldener Rahmen
+    const rim = ctx.createRadialGradient(c, c, r, c, c, R);
+    rim.addColorStop(0, "#7a4a0c");
+    rim.addColorStop(0.35, "#ffc94a");
+    rim.addColorStop(0.75, "#e6a52c");
+    rim.addColorStop(1, "#8a560f");
+    ctx.beginPath();
+    ctx.arc(c, c, R, 0, TAU);
+    ctx.fillStyle = rim;
+    ctx.fill();
+
+    // Lämpchen
+    const bulbs = 24;
+    const speed = spin ? 90 : 520;
+    const phase = reducedMotion ? 0 : Math.floor(now / speed);
+    for (let k = 0; k < bulbs; k++) {
+      const a = (k / bulbs) * TAU;
+      const x = c + Math.cos(a) * (r + (R - r) / 2);
+      const y = c + Math.sin(a) * (r + (R - r) / 2);
+      const on = reducedMotion || (k + phase) % 2 === 0;
+      ctx.beginPath();
+      ctx.arc(x, y, (R - r) * 0.22, 0, TAU);
+      ctx.fillStyle = on ? "#fff8d8" : "#9c6a1c";
+      ctx.shadowColor = on ? "rgba(255, 220, 120, 0.95)" : "transparent";
+      ctx.shadowBlur = on ? 10 : 0;
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    ctx.shadowColor = "transparent";
+
+    // Segmente
+    for (let i = 0; i < n; i++) {
+      const start = rotation + i * seg - Math.PI / 2;
+      ctx.beginPath();
+      ctx.moveTo(c, c);
+      ctx.arc(c, c, r, start, start + seg);
+      ctx.closePath();
+      ctx.fillStyle = names.length ? colors[i].bg : "#2a3285";
+      ctx.fill();
+      if (n > 1) {
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.55)";
+        ctx.lineWidth = Math.max(1, size / 400);
+        ctx.stroke();
+      }
+    }
+
+    // Namen
+    if (names.length) {
+      const fs = Math.max(9, Math.min(r * 0.11, seg * r * 0.62 * 0.6));
+      ctx.font = `800 ${fs}px Figtree, system-ui, sans-serif`;
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      for (let i = 0; i < n; i++) {
+        const mid = rotation + (i + 0.5) * seg - Math.PI / 2;
+        ctx.save();
+        ctx.translate(c, c);
+        ctx.rotate(mid);
+        ctx.fillStyle = colors[i].fg;
+        ctx.fillText(fitText(names[i], r * 0.66), r * 0.9, 0);
+        ctx.restore();
+      }
+    }
+
+    // Innenring-Schatten und Nabe
+    ctx.beginPath();
+    ctx.arc(c, c, r, 0, TAU);
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
+    ctx.lineWidth = Math.max(2, size / 160);
+    ctx.stroke();
+
+    const hubR = r * 0.15;
+    const hub = ctx.createRadialGradient(c - hubR * 0.3, c - hubR * 0.3, hubR * 0.1, c, c, hubR);
+    hub.addColorStop(0, "#fff3c4");
+    hub.addColorStop(0.6, "#ffc94a");
+    hub.addColorStop(1, "#b97a14");
+    ctx.beginPath();
+    ctx.arc(c, c, hubR, 0, TAU);
+    ctx.fillStyle = hub;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(c, c, hubR * 0.55, 0, TAU);
+    ctx.fillStyle = "#141846";
+    ctx.fill();
+  }
+
+  function indexAtPointer() {
+    const n = names.length;
+    if (!n) return -1;
+    return Math.floor(mod(-rotation, TAU) / (TAU / n)) % n;
+  }
+
+  function flickPointer() {
+    if (reducedMotion || !pointer.animate) return;
+    pointer.animate(
+      [{ transform: "translateX(-50%) rotate(-16deg)" }, { transform: "translateX(-50%) rotate(0deg)" }],
+      { duration: 110, easing: "ease-out" }
+    );
+  }
+
+  const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+
+  function frame(now) {
+    if (spin) {
+      const t = Math.min(1, (now - spin.start) / spin.duration);
+      rotation = spin.from + (spin.to - spin.from) * easeOut(t);
+      const idx = indexAtPointer();
+      if (idx !== lastIdx) { lastIdx = idx; tick(); flickPointer(); }
+      if (t >= 1) {
+        rotation = spin.to;
+        const winner = spin.winner;
+        spin = null;
+        reveal(winner);
+      }
+    }
+    draw(now);
+    loopId = requestAnimationFrame(frame);
+  }
+  function startLoop() { if (!loopId) loopId = requestAnimationFrame(frame); }
+  function stopLoop() { cancelAnimationFrame(loopId); loopId = 0; spin = null; }
+
+  function spinWheel() {
+    const n = names.length;
+    const seg = TAU / n;
+    const winner = randInt(n);
+    // Zielpunkt zufällig innerhalb des Gewinnersegments, nicht direkt auf der Kante
+    const local = (winner + 0.15 + random() * 0.7) * seg;
+    const delta = mod(mod(-local, TAU) - mod(rotation, TAU), TAU);
+    const turns = reducedMotion ? 1 : 6 + randInt(3);
+    lastIdx = indexAtPointer();
+    spin = {
+      from: rotation,
+      to: rotation + delta + turns * TAU,
+      start: performance.now(),
+      duration: reducedMotion ? 1500 : 5600 + random() * 1600,
+      winner,
+    };
+  }
+
+  // ---------- Ablauf ----------
+  let current = 0;
+  let winners = [];
+  let pendingStart = 0;
+
+  function renderRounds() {
+    const list = $("rounds");
+    list.textContent = "";
+    for (let i = 0; i < 3; i++) {
+      const li = document.createElement("li");
+      li.className = i < winners.length ? "done" : i === current ? "current" : "";
+      if (i === current && i >= winners.length) li.setAttribute("aria-current", "step");
+      const num = document.createElement("span");
+      num.textContent = `Runde ${i + 1}`;
+      const title = document.createElement("span");
+      title.className = "r-title";
+      title.textContent = titleOf(i);
+      const win = document.createElement("span");
+      win.className = "r-win";
+      win.textContent = winners[i] ? winners[i].name : i === current ? "läuft" : "–";
+      li.append(num, title, win);
+      list.append(li);
+    }
+  }
+
+  function beginRound(i) {
+    current = i;
+    names = parseNames(settings.cats[i].names);
+    colors = colorsFor(names.length);
+    $("game-eyebrow").textContent = `Kategorie ${i + 1} von 3`;
+    $("game-title").textContent = titleOf(i);
+    $("status").hidden = false;
+    $("status").textContent = "Das Rad dreht sich …";
+    $("winner").hidden = true;
+    $("winner").classList.remove("pop");
+    $("next-btn").hidden = true;
+    renderRounds();
+    show("game");
+    draw(performance.now());
+    clearTimeout(pendingStart);
+    pendingStart = setTimeout(spinWheel, 450);
+  }
+
+  function reveal(idx) {
+    const name = names[idx];
+    winners[current] = { title: titleOf(current), name };
+    $("status").hidden = true;
+    $("winner-name").textContent = name;
+    $("winner").hidden = false;
+    void $("winner").offsetWidth; // Animation neu starten
+    $("winner").classList.add("pop");
+    const next = $("next-btn");
+    next.textContent = current < 2 ? "Nächste Kategorie" : "Alle Gewinner anzeigen";
+    next.hidden = false;
+    next.focus({ preventScroll: true });
+    renderRounds();
+    fanfare();
+    confettiBurst();
+  }
+
+  function showResults() {
+    const board = $("board");
+    board.textContent = "";
+    winners.forEach((w, i) => {
+      const li = document.createElement("li");
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = String(i + 1);
+      const text = document.createElement("div");
+      const cat = document.createElement("div");
+      cat.className = "b-cat";
+      cat.textContent = w.title;
+      const win = document.createElement("div");
+      win.className = "b-win";
+      win.textContent = w.name;
+      text.append(cat, win);
+      li.append(badge, text);
+      board.append(li);
+    });
+    show("results");
+    confettiBurst();
+  }
+
+  $("start-btn").addEventListener("click", () => {
+    let firstInvalid = -1;
+    for (let i = 0; i < 3; i++) {
+      if (parseNames(settings.cats[i].names).length === 0) {
+        $(`cat-error-${i}`).textContent = "Bitte mindestens einen Namen eintragen.";
+        $(`cat-${i}`).classList.add("invalid");
+        if (firstInvalid < 0) firstInvalid = i;
+      } else {
+        clearError(i);
+      }
+    }
+    if (firstInvalid >= 0) { $(`cat-names-${firstInvalid}`).focus(); return; }
+    ensureAudio();
+    winners = [];
+    beginRound(0);
+  });
+
+  $("next-btn").addEventListener("click", () => {
+    if (current < 2) beginRound(current + 1);
+    else showResults();
+  });
+
+  $("back-btn").addEventListener("click", () => {
+    clearTimeout(pendingStart);
+    show("setup");
+  });
+  $("edit-btn").addEventListener("click", () => show("setup"));
+  $("again-btn").addEventListener("click", () => {
+    ensureAudio();
+    winners = [];
+    beginRound(0);
+  });
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => draw(performance.now()));
+
+  // ---------- Konfetti ----------
+  const cv = $("confetti");
+  const cctx = cv.getContext("2d");
+  let parts = [];
+  let confettiId = 0;
+
+  function confettiBurst() {
+    if (reducedMotion) return;
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    cv.width = Math.round(w * dpr);
+    cv.height = Math.round(h * dpr);
+    cctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const colorsAll = PALETTE.map((p) => p.bg).concat(["#ffc94a", "#fff3d6"]);
+    for (let i = 0; i < 170; i++) {
+      parts.push({
+        x: w / 2 + (random() - 0.5) * Math.min(w, 600) * 0.5,
+        y: h * 0.42,
+        vx: (random() - 0.5) * 15,
+        vy: -4 - random() * 13,
+        w: 6 + random() * 6,
+        h: 9 + random() * 8,
+        rot: random() * TAU,
+        vr: (random() - 0.5) * 0.35,
+        color: colorsAll[randInt(colorsAll.length)],
+      });
+    }
+    if (!confettiId) confettiId = requestAnimationFrame(confettiFrame);
+  }
+
+  function confettiFrame() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    cctx.clearRect(0, 0, w, h);
+    parts = parts.filter((p) => p.y < h + 30);
+    for (const p of parts) {
+      p.vy += 0.32;
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      cctx.save();
+      cctx.translate(p.x, p.y);
+      cctx.rotate(p.rot);
+      cctx.fillStyle = p.color;
+      cctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.rot * 1.7)));
+      cctx.restore();
+    }
+    confettiId = parts.length ? requestAnimationFrame(confettiFrame) : 0;
+  }
+})();
+</script>
+</body>
+</html>
