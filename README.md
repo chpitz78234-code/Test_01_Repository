@@ -5,3 +5,4 @@
 - [`motion-spec/reference/`](motion-spec/reference/): Frame-Belege aus den Referenzvideos
 - [`motion-spec/tools/analyze_motion.py`](motion-spec/tools/analyze_motion.py): vermisst Videos (Schnitte, Shotlängen, Bildraten-Muster, Beat-Abweichung)
 - [`gluecksrad/index.html`](gluecksrad/index.html): Glücksrad-Ziehung – drei frei benennbare Kategorien mit Vornamen; pro Kategorie dreht sich 5 Sekunden lang ein Farbrad (Namen verborgen), danach erscheint der Gewinnername in der Radmitte (Datei einfach im Browser öffnen)
+- [`schaetzele-markt/`](schaetzele-markt/): Titel-Loop „SCHÄTZELE MARKT – GRIFF KRAFT CHALLENGE“ als MP4 (1080×1080, 6,4 s, nahtlos loopbar); neu rendern mit `node schaetzele-markt/render.js [Breite] [Höhe]`
