@@ -1,0 +1,412 @@
+{
+  "$comment": "Maschinenlesbares Storyboard Weihnachtsgruss 2026, Renfert GmbH. Frames @30 fps, Pixel @1080x1920. Easing-Tokens und Regeln aus ../motion-spec/motion-spec.json. Beschreibung: STORYBOARD.md. Werte mit status 'placeholder' vor dem Render aus dem CI-Manual ersetzen.",
+  "version": "1.0.0",
+  "project": {
+    "title": "Weihnachtsgruss 2026 - Heute darf es stauben",
+    "client": "Renfert GmbH, Hilzingen",
+    "platforms": ["instagram_reels", "linkedin", "tiktok", "youtube_shorts", "facebook"],
+    "languages": ["de", "en"],
+    "default_language": "de"
+  },
+  "global": {
+    "motion_spec": "../motion-spec/motion-spec.json",
+    "format": { "aspect": "9:16", "width": 1080, "height": 1920 },
+    "fps": 30,
+    "duration_frames": 760,
+    "safe_area_px": { "top": 180, "bottom": 320, "left": 60, "right": 60 },
+    "cut": { "default_transition": "hard_cut", "allow_crossfade": false, "snap_to_beat_tolerance_frames": 1, "scene_cut_lead_frames": 2 },
+    "conform": { "source_fps_generative": 24, "method": "frame_duplication_to_30" },
+    "grade": { "shadows": "#0E1B2C", "highlights_kelvin": 3200, "film_grain": 0.06, "note": "gleicher Grade ueber generatives und reales Material" }
+  },
+  "brand": {
+    "palette": {
+      "night": { "hex": "#0E1B2C", "status": "proposed" },
+      "snow": { "hex": "#F5F7FA", "status": "proposed" },
+      "gold": { "hex": "#E8B65A", "status": "proposed" },
+      "brand_primary": { "hex": "#C8102E", "status": "placeholder", "source": "Renfert CI-Manual" },
+      "ink": { "hex": "#121212", "status": "proposed" }
+    },
+    "text_on": { "night": "snow", "brand_primary": "snow", "gold": "ink", "snow": "ink", "footage": "snow" },
+    "fonts": {
+      "headline": { "family": "Inter", "weight": 700, "status": "placeholder", "source": "Renfert-Hausschrift" },
+      "sub": { "family": "Inter", "weight": 500, "status": "placeholder" }
+    },
+    "logo": { "file": "assets/renfert_logo.svg", "file_negative": "assets/renfert_logo_neg.svg", "status": "missing", "rule": "nur als Vektor-Overlay, nie generativ" },
+    "claim": { "text": "making work easy", "status": "to_verify" }
+  },
+  "text_styles": {
+    "headline_footage": { "font": "headline", "size_px": 96, "line_height": 1.05, "color": "snow", "shadow": "0 4px 24px rgba(0,0,0,0.35)", "max_width_px": 900, "align": "center" },
+    "flash": { "font": "headline", "size_px": 120, "line_height": 1.0, "align": "center", "tracking": -0.02 },
+    "end_headline": { "font": "headline", "size_px": 104, "color": "snow", "align": "center" },
+    "end_sub": { "font": "sub", "size_px": 56, "color": "snow", "align": "center" },
+    "end_claim": { "font": "sub", "size_px": 52, "color": "gold", "align": "center", "tracking": 0.04 }
+  },
+  "animations": {
+    "word_rise": { "per_word_stagger_frames": 3, "frames": 12, "easing": "expo_out", "from": { "y_offset_px": 24, "opacity": 0 }, "to": { "y_offset_px": 0, "opacity": 1 }, "out": "hard_cut_with_scene" },
+    "hard_on": { "frames": 0 },
+    "pop": { "frames": 6, "easing": "back_out", "from": { "scale": 0.6, "opacity": 0 }, "to": { "scale": 1, "opacity": 1 } },
+    "stroke_draw": { "frames": 30, "easing": "expo_out" },
+    "stepped_idle": { "fps": 8, "jitter_px": [2, 6], "jitter_deg": 5 }
+  },
+  "copy": {
+    "de": {
+      "s1": "Das ganze Jahr: kein Staub im Labor.",
+      "s2": "Heute machen wir eine Ausnahme.",
+      "s4": "Mit Präzision geformt.",
+      "s5": "Mit Herz gemischt.",
+      "s6": ["Frohe Weihnachten", "Merry Christmas", "Joyeux Noël", "Feliz Navidad"],
+      "s7": "Grüße aus Hilzingen am Bodensee",
+      "s8": "Danke für Ihr Vertrauen 2026.",
+      "s8_fallback": "Danke für ein starkes Jahr 2026.",
+      "end_1": "Frohe Weihnachten",
+      "end_2": "und ein gutes neues Jahr 2027",
+      "claim": "making work easy",
+      "sign": "Ihr Renfert-Team"
+    },
+    "en": {
+      "s1": "All year long: no dust in the lab.",
+      "s2": "Today we make an exception.",
+      "s4": "Shaped with precision.",
+      "s5": "Mixed with heart.",
+      "s6": ["Merry Christmas", "Frohe Weihnachten", "Joyeux Noël", "Feliz Navidad"],
+      "s7": "Greetings from Hilzingen, Lake Constance",
+      "s8": "Thank you for your trust in 2026.",
+      "s8_fallback": "Thank you for a great 2026.",
+      "end_1": "Merry Christmas",
+      "end_2": "and a happy New Year 2027",
+      "claim": "making work easy",
+      "sign": "Your Renfert Team"
+    }
+  },
+  "music": {
+    "bpm": 90,
+    "meter": "4/4",
+    "frames_per_beat": 20,
+    "frames_per_bar": 80,
+    "key": "D major",
+    "source": "Lizenzmusik mit Social-Media-Lizenz (z. B. Artlist, Epidemic Sound, Musicbed)",
+    "brief": "warm, modern christmas; pizzicato strings, celesta/glockenspiel, sleigh bells, felt piano, light finger snaps from bar 3; no vocals; no well-known christmas melody",
+    "search_terms": ["warm corporate christmas pizzicato", "magical winter celesta 90 bpm"],
+    "sections": [
+      { "bars": [1, 1], "frames": [0, 80], "label": "intro", "note": "Pizzicato-Puls, reduziert" },
+      { "bars": [2, 2], "frames": [80, 160], "label": "stop_riser", "note": "Schlag 1 Stille, ab f100 Riser" },
+      { "bars": [3, 5], "frames": [160, 400], "label": "main", "note": "volle Instrumentierung" },
+      { "bars": [6, 6], "frames": [400, 480], "label": "peak", "note": "Glocken-Hit auf jedem Schlag" },
+      { "bars": [7, 7], "frames": [480, 560], "label": "open", "note": "Streicher-Pad, Drums raus" },
+      { "bars": [8, 8], "frames": [560, 640], "label": "warm", "note": "Thema kehrt zurueck" },
+      { "bars": [9, 9.5], "frames": [640, 760], "label": "outro", "note": "Schlussakkord mit Glocke, Fade ab f740" }
+    ],
+    "loudness": { "integrated_lufs": -14, "true_peak_dbtp": -1 },
+    "voiceover": false
+  },
+  "scenes": [
+    {
+      "id": "S1",
+      "title": "Hook: Praezision",
+      "frame_in": 0,
+      "frame_out": 80,
+      "bar": 1,
+      "source": {
+        "type": "generative",
+        "keyframe": {
+          "model": "nano_banana_pro",
+          "aspect_ratio": "9:16",
+          "resolution": "2k",
+          "prompt": "Vertical 9:16 cinematic macro photograph, modern dental laboratory workbench at night, single warm task light (3200K) from top left, deep blue ambient shadows. A gloved hand holds a dental handpiece grinding a white zirconia crown; fine white dust particles flow in a clean, backlit stream toward a matte grey extraction nozzle at the upper right. Very shallow depth of field, crisp sparkling particles, anamorphic bokeh, premium product-film look, photorealistic, no text, no logos, no brand names."
+        },
+        "video": {
+          "model": "seedance_2_0",
+          "media_role": "start_image",
+          "duration_s": 5,
+          "resolution": "1080p",
+          "mode": "std",
+          "generate_audio": false,
+          "prompt": "Slow dolly-in macro shot. Fine dust particles flow smoothly and steadily into the extraction nozzle, backlit and sparkling. The gloved hand makes small, precise grinding movements. Calm, controlled, precise mood. Subtle parallax, no cuts, no text."
+        },
+        "take_hint": "ruhigster 80-f-Abschnitt mit gleichmaessigem Partikelstrom",
+        "negative": "text, logos, watermark, distorted hands, extra fingers, cartoon"
+      },
+      "camera": "slow dolly-in",
+      "transition_out": { "type": "hard_cut", "frame": 80 },
+      "overlays": [
+        { "type": "text", "copy": "s1", "style": "headline_footage", "frame_in": 6, "frame_out": 80, "position": { "x": 540, "y": 560 }, "animation": "word_rise" }
+      ],
+      "audio": { "sfx": [ { "frame": 0, "cue": "lab_roomtone_extraction_hiss", "gain_db": -18, "until": 80 } ] }
+    },
+    {
+      "id": "S2",
+      "title": "Die Wende",
+      "frame_in": 80,
+      "frame_out": 160,
+      "bar": 2,
+      "source": {
+        "type": "hybrid",
+        "freeze": { "from_scene": "S1", "frame": "last", "frames": 20, "dim_exposure_stops": -0.3 },
+        "video": {
+          "model": "seedance_2_0",
+          "media_role": "start_image",
+          "start_image": "S1 keyframe or last frame of S1 take",
+          "duration_s": 5,
+          "resolution": "1080p",
+          "mode": "std",
+          "generate_audio": false,
+          "prompt": "Locked-off macro shot. The airflow stops; dust particles hang frozen in mid-air, the warm light dims slightly. Then the particles slowly reverse direction and drift upward out of the extraction nozzle, turning into tiny crystalline snowflakes that sparkle in the warm light. Magical, soft, slow motion, no text."
+        },
+        "mg_overlay": { "type": "snow_particles", "frame_in": 100, "density": "low_to_medium", "direction": "up_then_down" },
+        "take_hint": "60 f ab Beginn der Umkehrbewegung",
+        "fallback": "Umkehr per Rueckwaerts-Abspielen des S1-Takes + Schnee-Partikel-Overlay"
+      },
+      "camera": "locked off",
+      "transition_out": { "type": "hard_cut", "frame": 160 },
+      "overlays": [
+        { "type": "text", "copy": "s2", "style": "headline_footage", "frame_in": 84, "frame_out": 160, "position": { "x": 540, "y": 560 }, "animation": "word_rise" }
+      ],
+      "audio": {
+        "music_mute": { "frame_in": 80, "frame_out": 100 },
+        "sfx": [ { "frame": 80, "cue": "switch_click_airflow_powerdown" }, { "frame": 100, "cue": "shimmer_riser", "until": 160 } ]
+      }
+    },
+    {
+      "id": "S3",
+      "title": "Winterlandschaft",
+      "frame_in": 160,
+      "frame_out": 240,
+      "bar": 3,
+      "source": {
+        "type": "generative",
+        "keyframe": {
+          "model": "nano_banana_pro",
+          "aspect_ratio": "9:16",
+          "resolution": "2k",
+          "prompt": "Vertical 9:16 cinematic macro photograph, a dental laboratory workbench covered in a fine layer of fresh snow at blue hour. A row of white plaster dental models (upper jaw casts) stands like a snowy mountain range, small lab instruments half buried in snow, snowflakes gently falling, warm task light glowing in the background bokeh. Miniature tilt-shift look, cozy and magical, photorealistic, no text, no logos."
+        },
+        "video": {
+          "model": "seedance_2_0",
+          "media_role": "start_image",
+          "duration_s": 5,
+          "resolution": "1080p",
+          "mode": "std",
+          "generate_audio": false,
+          "prompt": "Slow lateral dolly from left to right along the snowy plaster mountain range, snowflakes falling softly, gentle sparkle on the snow, very shallow depth of field, no text."
+        },
+        "take_hint": "80 f mit gleichmaessiger Seitwaertsfahrt",
+        "negative": "text, logos, faces, gore, realistic gums, cartoon"
+      },
+      "camera": "lateral dolly left to right",
+      "transition_out": { "type": "hard_cut", "frame": 240 },
+      "overlays": [],
+      "audio": { "sfx": [ { "frame": 160, "cue": "soft_snow_poof" } ] }
+    },
+    {
+      "id": "S4",
+      "title": "Wachs-Stern",
+      "frame_in": 240,
+      "frame_out": 320,
+      "bar": 4,
+      "source": {
+        "type": "generative",
+        "keyframe": {
+          "model": "nano_banana_pro",
+          "aspect_ratio": "9:16",
+          "resolution": "2k",
+          "media_role": "image_references",
+          "reference": "assets/products/wachsmesser.png (optional)",
+          "prompt": "Vertical 9:16 macro photograph, the glowing heated metal tip of an electric wax knife in a dark dental lab, a drop of golden-amber modelling wax flowing from the tip onto a dark slate surface, faint steam wisps, warm golden glow, snowy bokeh in the background, photorealistic, no text, no logos."
+        },
+        "video": {
+          "model": "seedance_2_0",
+          "media_role": "start_image",
+          "duration_s": 5,
+          "resolution": "1080p",
+          "mode": "std",
+          "generate_audio": false,
+          "prompt": "Macro slow motion. Golden wax flows from the glowing tip and draws a perfect five-pointed star in one continuous line on the dark surface, then the star hardens and catches a warm highlight glint. Locked camera with a slight push-in, no text."
+        },
+        "take_hint": "Stern muss bis f300 vollstaendig sein",
+        "negative": "text, logos, deformed star, extra points, cartoon"
+      },
+      "camera": "macro, slight push-in",
+      "transition_out": { "type": "hard_cut", "frame": 320 },
+      "overlays": [
+        { "type": "text", "copy": "s4", "style": "headline_footage", "frame_in": 246, "frame_out": 320, "position": { "x": 540, "y": 560 }, "animation": "word_rise" },
+        { "type": "shape", "shape": "star_5_outline", "color": "gold", "stroke_px": 6, "frame_in": 262, "frame_out": 320, "animation": "stroke_draw", "track_to": "wax_star" },
+        { "type": "glint", "color": "gold", "frame_in": 300, "frames": 8 }
+      ],
+      "audio": { "sfx": [ { "frame": 250, "cue": "wax_sizzle", "gain_db": -20 }, { "frame": 300, "cue": "sparkle_ting" } ] }
+    },
+    {
+      "id": "S5",
+      "title": "Schneekugel",
+      "frame_in": 320,
+      "frame_out": 400,
+      "bar": 5,
+      "source": {
+        "type": "generative",
+        "keyframe": {
+          "model": "nano_banana_pro",
+          "aspect_ratio": "9:16",
+          "resolution": "2k",
+          "media_role": "image_references",
+          "reference": "assets/products/anmischbecher.png",
+          "prompt": "Vertical 9:16 photograph, a transparent dental vacuum mixing bowl seen from slightly above. Inside, white plaster swirls in a vortex that becomes a snow globe: snowflakes swirl around a miniature snowy village with a small modern factory building with glowing windows and a tiny decorated fir tree. Warm interior light, dark blue background, photorealistic miniature, no text, no logos."
+        },
+        "video": {
+          "model": "seedance_2_0",
+          "media_role": "start_image",
+          "duration_s": 5,
+          "resolution": "1080p",
+          "mode": "std",
+          "generate_audio": false,
+          "prompt": "The white swirl inside the bowl slows down and settles into gently falling snow inside a snow globe, revealing the miniature snowy village with warm glowing windows. The camera slowly orbits about 20 degrees and pushes in toward the glass, accelerating at the very end. No text."
+        },
+        "take_hint": "Push-in am Ende behalten (Match-Zoom in S7)",
+        "negative": "text, logos, cartoon, plastic look"
+      },
+      "camera": "orbit 20 deg + push-in, last 8 f whip_in",
+      "transition_out": { "type": "hard_cut", "frame": 400, "note": "Push-in endet in Bewegung (whip_in) und schneidet hart auf den ersten Flash" },
+      "overlays": [
+        { "type": "text", "copy": "s5", "style": "headline_footage", "frame_in": 326, "frame_out": 400, "position": { "x": 540, "y": 560 }, "animation": "word_rise" }
+      ],
+      "audio": { "sfx": [ { "frame": 330, "cue": "glass_swirl_whoosh" }, { "frame": 380, "cue": "glass_ting" } ] }
+    },
+    {
+      "id": "S6",
+      "title": "Hoehepunkt: Gruesse in vier Sprachen",
+      "frame_in": 400,
+      "frame_out": 480,
+      "bar": 6,
+      "source": { "type": "motion_graphics" },
+      "flash_sequence": {
+        "frames_per_flash": 20,
+        "layout": "identical, text centered at y=860",
+        "flashes": [
+          { "frame_in": 400, "background": "brand_primary", "text_color": "snow", "copy_index": 0, "animation": "pop" },
+          { "frame_in": 420, "background": "night", "text_color": "snow", "copy_index": 1, "animation": "hard_on" },
+          { "frame_in": 440, "background": "gold", "text_color": "ink", "copy_index": 2, "animation": "hard_on" },
+          { "frame_in": 460, "background": "snow", "text_color": "ink", "copy_index": 3, "animation": "hard_on" }
+        ],
+        "ornaments": { "type": "snowflake_icons", "count": 5, "animation": "stepped_idle", "color_rule": "text_color at 40% opacity" }
+      },
+      "camera": "none",
+      "transition_out": { "type": "hard_cut", "frame": 480 },
+      "overlays": [
+        { "type": "text", "copy": "s6", "style": "flash", "position": { "x": 540, "y": 860 }, "driven_by": "flash_sequence" }
+      ],
+      "audio": { "sfx": [ { "frame": 400, "cue": "bell_hit_1" }, { "frame": 420, "cue": "bell_hit_2" }, { "frame": 440, "cue": "bell_hit_3" }, { "frame": 460, "cue": "bell_hit_4" }, { "frame": 476, "cue": "snow_whiteout_whoosh", "until": 492 } ] },
+      "thumbnail_candidate_frame": 405
+    },
+    {
+      "id": "S7",
+      "title": "Heimat",
+      "frame_in": 480,
+      "frame_out": 560,
+      "bar": 7,
+      "source": {
+        "type": "real_footage_preferred",
+        "real": { "file": "assets/footage/drohne_hegau_winter.mp4", "status": "missing", "note": "Archiv oder Stock, hochkant gecroppt" },
+        "generative_fallback": {
+          "keyframe": {
+            "model": "cinematic_studio_2_5",
+            "aspect_ratio": "9:16",
+            "resolution": "2k",
+            "prompt": "Vertical 9:16 aerial photograph at blue hour, snowy rolling hills of the Hegau region in southern Germany with volcanic cones, a small German village with warm window lights in the foreground, Lake Constance glowing faintly on the horizon, light snowfall, cinematic, photorealistic, no text."
+          },
+          "video": {
+            "model": "cinematic_studio_3_0",
+            "media_role": "start_image",
+            "duration_s": 5,
+            "resolution": "1080p",
+            "generate_audio": false,
+            "prompt": "Slow aerial drone shot rising and pulling back over the snowy village at blue hour, gentle snowfall, warm lights twinkling, the lake on the horizon. Starts already in motion. No text."
+          }
+        },
+        "take_hint": "Bewegung bereits im ersten Frame (expo_out-Gefuehl)"
+      },
+      "camera": "drone rise + pull-back",
+      "transition_in": { "type": "snow_whiteout", "frames": 12, "easing": "expo_out", "note": "Letzter Flash in S6 ist snow-weiss; S7 startet mit dichtem weissem Schnee-Overlay (100 % Deckung) + 115 % Scale, das Gestoeber reisst in 12 f auf und gibt das Luftbild frei" },
+      "transition_out": { "type": "hard_cut", "frame": 560 },
+      "overlays": [
+        { "type": "text", "copy": "s7", "style": "headline_footage", "frame_in": 490, "frame_out": 560, "position": { "x": 540, "y": 560 }, "animation": "word_rise" }
+      ],
+      "audio": { "sfx": [ { "frame": 480, "cue": "wind_soft", "gain_db": -22, "until": 560 } ] }
+    },
+    {
+      "id": "S8",
+      "title": "Menschen",
+      "frame_in": 560,
+      "frame_out": 640,
+      "bar": 8,
+      "source": {
+        "type": "real_footage",
+        "real": {
+          "file": "assets/footage/team_winken.mp4",
+          "status": "missing",
+          "shooting_brief": "Smartphone hochkant, 4K, 30 fps, Stativ oder ruhige Hand, 5-8 s; Team vor dem Gebaeude im Schnee oder im Labor mit Lichterkette, winkt und ruft 'Frohe Weihnachten!'; Einverstaendnis aller Personen einholen"
+        },
+        "generative_fallback": {
+          "keyframe": {
+            "model": "nano_banana_pro",
+            "aspect_ratio": "9:16",
+            "resolution": "2k",
+            "prompt": "Vertical 9:16 photograph, close-up of several hands raising mugs of hot cocoa in a toast above a dental lab workbench decorated with warm fairy lights and a small fir branch, cozy evening atmosphere, shallow depth of field, no faces, no text, no logos."
+          },
+          "video": {
+            "model": "seedance_2_0",
+            "media_role": "start_image",
+            "duration_s": 5,
+            "resolution": "1080p",
+            "mode": "std",
+            "generate_audio": false,
+            "prompt": "The hands gently clink their mugs together, fairy lights twinkle, steam rises. Slow push-in. No faces, no text."
+          },
+          "copy_override": "s8_fallback"
+        },
+        "rule": "keine generierten Gesichter, die als Renfert-Team ausgegeben werden"
+      },
+      "camera": "static or slow push-in",
+      "transition_out": { "type": "hard_cut", "frame": 640 },
+      "overlays": [
+        { "type": "text", "copy": "s8", "style": "headline_footage", "frame_in": 566, "frame_out": 640, "position": { "x": 540, "y": 560 }, "animation": "word_rise" }
+      ],
+      "audio": { "sfx": [ { "frame": 566, "cue": "team_shout_frohe_weihnachten", "optional": true, "source": "O-Ton Realdreh" } ] }
+    },
+    {
+      "id": "S9",
+      "title": "Endcard",
+      "frame_in": 640,
+      "frame_out": 760,
+      "bar": 9,
+      "source": { "type": "motion_graphics" },
+      "background": "night",
+      "layers": [
+        { "type": "snow_particles", "density": "low", "speed": "slow", "frame_in": 640, "note": "einzige Bewegung nach dem Aufbau" },
+        { "type": "logo", "asset": "brand.logo.file_negative", "width_px": 520, "position": { "x": 540, "y": 700 }, "frame_in": 640, "animation": "pop" },
+        { "type": "text", "copy": "end_1", "style": "end_headline", "position": { "x": 540, "y": 960 }, "frame_in": 646, "animation": "word_rise" },
+        { "type": "text", "copy": "end_2", "style": "end_sub", "position": { "x": 540, "y": 1050 }, "frame_in": 649, "animation": "word_rise" },
+        { "type": "text", "copy": "claim", "style": "end_claim", "position": { "x": 540, "y": 1200 }, "frame_in": 657, "animation": "word_rise" },
+        { "type": "text", "copy": "sign", "style": "end_sub", "position": { "x": 540, "y": 1290 }, "frame_in": 660, "animation": "word_rise" }
+      ],
+      "static_after_frame": 672,
+      "audio": { "sfx": [ { "frame": 640, "cue": "final_bell_sparkle" } ], "music_fade": { "frame_in": 740, "frame_out": 760 } }
+    }
+  ],
+  "versions": [
+    { "id": "main_de", "language": "de", "scenes": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"], "duration_frames": 760 },
+    { "id": "main_en", "language": "en", "scenes": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"], "duration_frames": 760 },
+    { "id": "short_de", "language": "de", "scenes": ["S1", "S2", "S5", "S6", "S9"], "overrides": { "S9": { "duration_frames": 100 } }, "duration_frames": 420, "music": "eigener Edit" }
+  ],
+  "deliverables": {
+    "video": { "container": "mp4", "codec": "h264", "bitrate_mbps": 16, "audio": "aac_48k_stereo" },
+    "files": ["renfert_xmas26_main_de.mp4", "renfert_xmas26_main_en.mp4", "renfert_xmas26_short_de.mp4", "renfert_xmas26_cover_de.jpg"],
+    "ai_label": "Plattform-KI-Kennzeichnung aktivieren (realistische KI-Szenen enthalten)"
+  },
+  "qc": {
+    "cuts_on_grid": { "grid_frames": 20, "tolerance_frames": 1, "tool": "../motion-spec/tools/analyze_motion.py" },
+    "text_in_safe_area": true,
+    "min_text_hold_s": 1.5,
+    "min_text_hold_exceptions": ["S6"],
+    "no_generated_logos_or_text": true,
+    "loudness_lufs": -14,
+    "true_peak_dbtp": -1
+  }
+}
