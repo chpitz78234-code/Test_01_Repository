@@ -1,9 +1,20 @@
 {
   "project": "renfert-xmas-reel",
   "source": "Claude Docs: Renfert Weihnachtsreel – Storyboard & Prompt Sheet (Stand 2026-11-03)",
-  "format": { "aspect": "9:16", "width": 1080, "height": 1920 },
-  "brand": { "renfert_red_hex": "#C8102E", "renfert_red_rgb": [200, 16, 46], "note": "Zielwert für die Farbkorrektur aller Clips; Bildmodelle setzen HEX-Werte nicht verlässlich um, daher bleibt das Rot im Prompt sprachlich beschrieben." },
-
+  "format": {
+    "aspect": "9:16",
+    "width": 1080,
+    "height": 1920
+  },
+  "brand": {
+    "renfert_red_hex": "#C8102E",
+    "renfert_red_rgb": [
+      200,
+      16,
+      46
+    ],
+    "note": "Zielwert für die Farbkorrektur aller Clips; Bildmodelle setzen HEX-Werte nicht verlässlich um, daher bleibt das Rot im Prompt sprachlich beschrieben."
+  },
   "blocks": {
     "STYLE": "Stylized 3D animated feature film look, cinematic premium Christmas commercial, vertical 9:16 composition, strict top-down overhead camera looking straight down at a flat field of fresh soft snow. Fine sparkling snow crystals, soft subsurface scattering, gentle rounded forms. Night-time mood: deep blue shadows, cream-white snow, warm golden highlights. Beneath the snow lies a smooth, slightly glossy, deep saturated red surface that becomes visible wherever snow is cleared away. Soft warm cinematic lighting, subtle vignette, shallow depth of field, calm and serene atmosphere, light snowfall drifting slowly through frame.",
     "ORB": "a small glowing golden orb of light, about the size of a walnut, soft warm bloom, trailing a thin sparkling glitter tail that curls gently behind it",
@@ -11,18 +22,40 @@
     "ICON": "a simple, bold, stylized line-art symbol drawn into the snow as if by an invisible finger; along the lines the snow is cleared away, revealing the glossy deep red surface underneath; clean rounded strokes, friendly flat icon style",
     "NEGATIVE": "no people, no legs, no feet, no visible character, no shadows of a person, no text, no letters, no logos, no watermark, no camera tilt, no perspective view, no fast motion, no blood, no realistic gore"
   },
-
   "models": {
-    "image": { "id": "nano_banana_pro", "aspect_ratio": "9:16", "params": { "resolution": "2k" }, "reference_role": "image_references" },
-    "video": { "id": "seedance_2_0", "aspect_ratio": "9:16", "params": { "resolution": "1080p", "mode": "std", "generate_audio": false }, "min_duration_s": 4, "max_duration_s": 15, "variants": 3 },
+    "image": {
+      "id": "nano_banana_pro",
+      "aspect_ratio": "9:16",
+      "params": {
+        "resolution": "2k"
+      },
+      "reference_role": "image_references"
+    },
+    "video": {
+      "id": "seedance_2_0",
+      "aspect_ratio": "9:16",
+      "params": {
+        "resolution": "1080p",
+        "mode": "std",
+        "generate_audio": false
+      },
+      "min_duration_s": 4,
+      "max_duration_s": 15,
+      "variants": 3
+    },
     "why": "Beide Modelle laut Higgsfield-Katalog mit 9:16; nano_banana_pro nimmt Referenzbilder (Image-to-Image), seedance_2_0 nimmt start_image + end_image. Ton kommt komplett aus der Post, daher generate_audio=false."
   },
-
   "voiceover": {
     "provider": "elevenlabs",
     "model_id": "eleven_multilingual_v2",
     "voice_profile": "Warm, gentle female voice, mid-30s, native English speaker with a soft neutral accent. Calm, intimate storytelling tone, like reading a Christmas card aloud by the fireplace. Slow pace, soft smile in the voice, clear diction, no theatrical drama.",
-    "voice_settings": { "stability": 0.75, "similarity_boost": 0.75, "style": 0.1, "use_speaker_boost": true, "speed": 0.92 },
+    "voice_settings": {
+      "stability": 0.75,
+      "similarity_boost": 0.75,
+      "style": 0.1,
+      "use_speaker_boost": true,
+      "speed": 0.92
+    },
     "text": "<break time=\"1.5s\" />\nTo every hand that shapes a smile,\n<break time=\"0.4s\" />\nin lab and practice, mile by mile,\n<break time=\"0.4s\" />\nyour skill and trust have made us strong,\n<break time=\"0.4s\" />\nit's you we've built for all year long.\n<break time=\"1.2s\" />\nNow candles glow and work can rest,\n<break time=\"0.4s\" />\nmay this season bring the best.\n<break time=\"1.2s\" />\nMerry Christmas and a bright New Year,\n<break time=\"0.6s\" />\nfrom all of us at Renfert.",
     "lines": [
       "To every hand that shapes a smile,",
@@ -37,46 +70,197 @@
     "first_line_at_s": 6.0,
     "logo_tail_s": 4.0
   },
-
   "references": [
-    { "id": "R_STEP", "prompt": "[STYLE] Top-down. One [STEP] centered in the frame, toe pointing up, the rest of the snow untouched. [NEGATIVE]" },
-    { "id": "R_ORB", "prompt": "[STYLE] Top-down. [ORB] hovering just above untouched snow in the center of the frame, its glitter tail curling around it. [NEGATIVE]" },
-    { "id": "R_ICON1", "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a tooth being shaped by hammer and chisel — a simple tooth outline, a small chisel touching its crown, a small hammer above the chisel, three tiny spark lines at the contact point. [NEGATIVE]" },
-    { "id": "R_ICON2", "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a stylized friendly smile — wide curved lips with a neat row of upper teeth. [NEGATIVE]" },
-    { "id": "R_ICON3", "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a simple candle with a teardrop flame. The flame glows with real warm golden light, casting a soft warm glow onto the surrounding snow. [NEGATIVE]" },
-    { "id": "R_ICON4", "prompt": "[STYLE] Top-down. A large molar tooth silhouette fills the center of the frame, roots pointing down. Inside the tooth shape the snow is completely cleared, revealing a large smooth glossy deep red surface with soft snow edges. [NEGATIVE]" }
+    {
+      "id": "R_STEP",
+      "prompt": "[STYLE] Top-down. One [STEP] centered in the frame, toe pointing up, the rest of the snow untouched. [NEGATIVE]"
+    },
+    {
+      "id": "R_ORB",
+      "prompt": "[STYLE] Top-down. [ORB] hovering just above untouched snow in the center of the frame, its glitter tail curling around it. [NEGATIVE]"
+    },
+    {
+      "id": "R_ICON1",
+      "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a tooth being shaped by hammer and chisel — a simple tooth outline, a small chisel touching its crown, a small hammer above the chisel, three tiny spark lines at the contact point. [NEGATIVE]"
+    },
+    {
+      "id": "R_ICON2",
+      "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a stylized friendly smile — wide curved lips with a neat row of upper teeth. [NEGATIVE]"
+    },
+    {
+      "id": "R_ICON3",
+      "prompt": "[STYLE] Top-down. Centered in untouched snow: [ICON] showing a simple candle with a teardrop flame. The flame glows with real warm golden light, casting a soft warm glow onto the surrounding snow. [NEGATIVE]"
+    },
+    {
+      "id": "R_ICON4",
+      "prompt": "[STYLE] Top-down. A large molar tooth silhouette fills the center of the frame, roots pointing down. Inside the tooth shape the snow is completely cleared, revealing a large smooth glossy deep red surface with soft snow edges. [NEGATIVE]"
+    }
   ],
-
   "keyframes": [
-    { "id": "K0", "prompt": "[STYLE] An untouched, perfectly smooth snow field fills the entire frame. Darker blue edges, soft moonlit light in the center, a few snowflakes drifting. [NEGATIVE]", "refs": [] },
-    { "id": "K1", "prompt": "[STYLE] Top-down. In the lower left third of the frame one [STEP], toe pointing up. Beside it, hovering just above the snow, [ORB], its glitter tail curling around the footprint. The rest of the snow untouched. [NEGATIVE]", "refs": ["R_STEP", "R_ORB"] },
-    { "id": "K2", "prompt": "[STYLE] Top-down, camera moved slightly forward. The first [STEP] near the bottom left edge, a second [STEP] above it on the right. On the left, opposite the second step: [ICON] showing a tooth being shaped by hammer and chisel — a simple tooth outline, a small chisel touching its crown, a small hammer above the chisel, three tiny spark lines at the contact point. [ORB] hovering at the tip of the chisel. [NEGATIVE]", "refs": ["R_STEP", "R_ORB", "R_ICON1"] },
-    { "id": "K3", "prompt": "[STYLE] Top-down, camera moved further forward. The tooth icon now in the lower left area, a third [STEP] on the left above it. On the right, opposite: [ICON] showing a stylized friendly smile — wide curved lips with a neat row of upper teeth. [ORB] resting at the corner of the smile. [NEGATIVE]", "refs": ["R_STEP", "R_ORB", "R_ICON1", "R_ICON2"] },
-    { "id": "K4", "prompt": "[STYLE] Top-down. A calm trail of four [STEP] prints running from the bottom of the frame upward, alternating left and right. The icons have moved out of frame below. [ORB] floating beside the newest print. Gentle snowfall. [NEGATIVE]", "refs": ["R_STEP", "R_ORB"] },
-    { "id": "K5", "prompt": "[STYLE] Top-down. The trail of red [STEP] prints continues upward, alternating left and right. [ORB] slightly ahead of the trail, as if leading the way. Snowfall a little denser, light a touch warmer. [NEGATIVE]", "refs": ["R_STEP", "R_ORB"] },
-    { "id": "K6", "prompt": "[STYLE] Top-down. A [STEP] on the left; opposite on the right: [ICON] showing a simple candle with a teardrop flame. The flame glows with real warm golden light, casting a soft warm glow onto the surrounding snow. [ORB] hovering just above the flame. Overall light noticeably warmer. [NEGATIVE]", "refs": ["R_STEP", "R_ORB", "R_ICON3"] },
-    { "id": "K7", "prompt": "[STYLE] Top-down. The last two [STEP] prints at the bottom of the frame end just below a large molar tooth silhouette that fills the center of the frame, roots pointing down towards the footprints. Inside the tooth shape the snow is completely cleared, revealing a large smooth glossy deep red surface with soft snow edges. A gentle snow flurry swirls around it. [ORB] hovering at the left edge of the tooth. The interior of the tooth is empty, reserved for text. [NEGATIVE]", "refs": ["R_STEP", "R_ORB", "R_ICON4"] },
-    { "id": "K8", "prompt": "[STYLE] Top-down, camera locked. The large red tooth silhouette centered in the frame, a fine shimmering line of golden sparkle dust lying across its middle from left to right. No orb visible; a few golden sparkles drifting down like snow. [NEGATIVE]", "refs": ["R_ICON4"] }
+    {
+      "id": "K0",
+      "prompt": "[STYLE] An untouched, perfectly smooth snow field fills the entire frame. Darker blue edges, soft moonlit light in the center, a few snowflakes drifting. [NEGATIVE]",
+      "refs": []
+    },
+    {
+      "id": "K1",
+      "prompt": "[STYLE] Top-down. In the lower left third of the frame one [STEP], toe pointing up. Beside it, hovering just above the snow, [ORB], its glitter tail curling around the footprint. The rest of the snow untouched. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB"
+      ]
+    },
+    {
+      "id": "K2",
+      "prompt": "[STYLE] Top-down, camera moved slightly forward. The first [STEP] near the bottom left edge, a second [STEP] above it on the right. On the left, opposite the second step: [ICON] showing a tooth being shaped by hammer and chisel — a simple tooth outline, a small chisel touching its crown, a small hammer above the chisel, three tiny spark lines at the contact point. [ORB] hovering at the tip of the chisel. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB",
+        "R_ICON1"
+      ]
+    },
+    {
+      "id": "K3",
+      "prompt": "[STYLE] Top-down, camera moved further forward. The tooth icon now in the lower left area, a third [STEP] on the left above it. On the right, opposite: [ICON] showing a stylized friendly smile — wide curved lips with a neat row of upper teeth. [ORB] resting at the corner of the smile. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB",
+        "R_ICON1",
+        "R_ICON2"
+      ]
+    },
+    {
+      "id": "K4",
+      "prompt": "[STYLE] Top-down. A calm trail of four [STEP] prints running from the bottom of the frame upward, alternating left and right. The icons have moved out of frame below. [ORB] floating beside the newest print. Gentle snowfall. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB"
+      ]
+    },
+    {
+      "id": "K5",
+      "prompt": "[STYLE] Top-down. The trail of red [STEP] prints continues upward, alternating left and right. [ORB] slightly ahead of the trail, as if leading the way. Snowfall a little denser, light a touch warmer. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB"
+      ]
+    },
+    {
+      "id": "K6",
+      "prompt": "[STYLE] Top-down. A [STEP] on the left; opposite on the right: [ICON] showing a simple candle with a teardrop flame. The flame glows with real warm golden light, casting a soft warm glow onto the surrounding snow. [ORB] hovering just above the flame. Overall light noticeably warmer. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB",
+        "R_ICON3"
+      ]
+    },
+    {
+      "id": "K7",
+      "prompt": "[STYLE] Top-down. The last two [STEP] prints at the bottom of the frame end just below a large molar tooth silhouette that fills the center of the frame, roots pointing down towards the footprints. Inside the tooth shape the snow is completely cleared, revealing a large smooth glossy deep red surface with soft snow edges. A gentle snow flurry swirls around it. [ORB] hovering at the left edge of the tooth. The interior of the tooth is empty, reserved for text. [NEGATIVE]",
+      "refs": [
+        "R_STEP",
+        "R_ORB",
+        "R_ICON4"
+      ]
+    },
+    {
+      "id": "K8",
+      "prompt": "[STYLE] Top-down, camera moved closer: the large glossy red tooth silhouette is centered and fills most of the frame width; the boot prints are out of frame. In the middle of the tooth the words \"Happy Holidays\" in elegant Christmas calligraphy script, warm shimmering gold with a soft glow, perfectly legible. Golden sparkle dust flows along the lettering; a few golden sparkles drift down like snow. [NEGATIVE]",
+      "refs": [
+        "R_ICON4"
+      ]
+    }
   ],
-
   "scenes": [
-    { "id": "S1", "title": "Schneefläche", "line": null, "cue": "start", "duration_s": 3, "start_frame": "K0", "end_frame": "K0",
-      "video_prompt": "Static top-down shot, almost still. Snowflakes drift slowly down across the frame, tiny crystals sparkle softly on the snow surface. Very calm, peaceful." },
-    { "id": "S2", "title": "Erster Schritt, die Kugel erscheint", "line": null, "cue": "mid_preroll", "duration_s": 3, "start_frame": "K0", "end_frame": "K1",
-      "video_prompt": "A single large boot print presses itself into the snow on its own, no one visible. The snow inside the print softly puffs away, revealing the glossy deep red surface. A tiny golden spark ignites beside it and grows into [ORB], which circles once around the print with its sparkling tail. Camera static, top-down, slow and gentle." },
-    { "id": "S3", "title": "Icon 1: Zahn mit Hammer und Meißel", "line": "To every hand that shapes", "cue": "line:0", "duration_s": 3, "start_frame": "K1", "end_frame": "K2",
-      "video_prompt": "The camera glides slowly upward, following the trail. A second boot print appears on the right, revealing red. On the left, [ORB] moves like a pen tip and draws the icon into the snow stroke by stroke: tooth outline, chisel, hammer; the snow clears along its path, revealing glossy red lines. Small sparkles at the chisel tip. Gentle, unhurried motion." },
-    { "id": "S4", "title": "Icon 2: Lächeln", "line": "a smile", "cue": "phrase:0:a smile", "duration_s": 2, "start_frame": "K2", "end_frame": "K3",
-      "video_prompt": "The camera keeps gliding upward at the same gentle pace. A third boot print appears on the left. [ORB] swoops to the right and draws a wide smile into the snow in one smooth curve, then the row of teeth; red is revealed along the lines. The orb gives a small happy bounce at the end." },
-    { "id": "S5", "title": "Ruhiges Gehen A", "line": "in lab and practice … made us strong", "cue": "line:1", "duration_s": 5, "start_frame": "K3", "end_frame": "K4",
-      "video_prompt": "The camera glides upward at a slow, constant pace. Two more boot prints appear in an even rhythm, left, then right, each revealing red. [ORB] floats beside them in lazy, playful loops, its glitter tail drawing soft curves in the air. Snow drifts down calmly." },
-    { "id": "S6", "title": "Ruhiges Gehen B", "line": "it's you we've built for all year long", "cue": "line:3", "duration_s": 5, "start_frame": "K4", "end_frame": "K5",
-      "video_prompt": "Same calm upward glide. Two more boot prints appear in rhythm. [ORB] drifts ahead, pauses, waits for the next step, then floats on. Snowfall becomes slightly denser; the light slowly turns a little warmer. Peaceful, meditative." },
-    { "id": "S7", "title": "Icon 3: Kerze", "line": "Now candles glow … bring the best", "cue": "line:4", "duration_s": 7, "start_frame": "K5", "end_frame": "K6",
-      "video_prompt": "The camera glides upward and slows slightly. A boot print appears on the left. [ORB] draws a candle into the snow on the right, red lines revealed. Then it touches the wick: a warm golden flame lights up and its glow spreads softly over the snow. The whole scene turns warmer and cosier." },
-    { "id": "S8", "title": "Finale: große Zahnform", "line": "Merry Christmas and a bright New Year", "cue": "line:6", "duration_s": 5, "start_frame": "K6", "end_frame": "K7",
-      "video_prompt": "Two final boot prints appear and stop just below a large tooth shape outlined in the snow. A soft gust lifts the snow off the tooth area in a gentle swirling flurry, revealing a large glossy red tooth silhouette. Snow sparkles drift through the air. The camera slows down and settles, centered on the tooth." },
-    { "id": "S9", "title": "Abschluss", "line": "from all of us at Renfert", "cue": "line:7", "duration_s": 9, "start_frame": "K7", "end_frame": "K8",
-      "video_prompt": "Camera locked. [ORB] glides in a slow arc across the red tooth from left to right, leaving a shimmering line of golden sparkle dust across its center. It rises, slows down and dissolves into a soft burst of tiny golden sparkles that drift down like snowflakes. Calm ending, hold the final image." }
+    {
+      "id": "S1",
+      "title": "Schneefläche",
+      "line": null,
+      "cue": "start",
+      "duration_s": 3,
+      "start_frame": "K0",
+      "end_frame": "K0",
+      "video_prompt": "Static top-down shot, almost still. Snowflakes drift slowly down across the frame, tiny crystals sparkle softly on the snow surface. Very calm, peaceful."
+    },
+    {
+      "id": "S2",
+      "title": "Erster Schritt, die Kugel erscheint",
+      "line": null,
+      "cue": "mid_preroll",
+      "duration_s": 3,
+      "start_frame": "K0",
+      "end_frame": "K1",
+      "video_prompt": "A single large boot print presses itself into the snow on its own, no one visible. The snow inside the print softly puffs away, revealing the glossy deep red surface. A tiny golden spark ignites beside it and grows into [ORB], which circles once around the print with its sparkling tail. Camera static, top-down, slow and gentle."
+    },
+    {
+      "id": "S3",
+      "title": "Icon 1: Zahn mit Hammer und Meißel",
+      "line": "To every hand that shapes",
+      "cue": "line:0",
+      "duration_s": 3,
+      "start_frame": "K1",
+      "end_frame": "K2",
+      "video_prompt": "The camera glides slowly upward, following the trail. A second boot print appears on the right, revealing red. On the left, [ORB] moves like a pen tip and draws the icon into the snow stroke by stroke: tooth outline, chisel, hammer; the snow clears along its path, revealing glossy red lines. Small sparkles at the chisel tip. Gentle, unhurried motion."
+    },
+    {
+      "id": "S4",
+      "title": "Icon 2: Lächeln",
+      "line": "a smile",
+      "cue": "phrase:0:a smile",
+      "duration_s": 2,
+      "start_frame": "K2",
+      "end_frame": "K3",
+      "video_prompt": "The camera keeps gliding upward at the same gentle pace. A third boot print appears on the left. [ORB] swoops to the right and draws a wide smile into the snow in one smooth curve, then the row of teeth; red is revealed along the lines. The orb gives a small happy bounce at the end."
+    },
+    {
+      "id": "S5",
+      "title": "Ruhiges Gehen A",
+      "line": "in lab and practice … made us strong",
+      "cue": "line:1",
+      "duration_s": 5,
+      "start_frame": "K3",
+      "end_frame": "K4",
+      "video_prompt": "The camera glides upward at a slow, constant pace. Two more boot prints appear in an even rhythm, left, then right, each revealing red. [ORB] floats beside them in lazy, playful loops, its glitter tail drawing soft curves in the air. Snow drifts down calmly."
+    },
+    {
+      "id": "S6",
+      "title": "Ruhiges Gehen B",
+      "line": "it's you we've built for all year long",
+      "cue": "line:3",
+      "duration_s": 5,
+      "start_frame": "K4",
+      "end_frame": "K5",
+      "video_prompt": "Same calm upward glide. Two more boot prints appear in rhythm. [ORB] drifts ahead, pauses, waits for the next step, then floats on. Snowfall becomes slightly denser; the light slowly turns a little warmer. Peaceful, meditative."
+    },
+    {
+      "id": "S7",
+      "title": "Icon 3: Kerze",
+      "line": "Now candles glow … bring the best",
+      "cue": "line:4",
+      "duration_s": 7,
+      "start_frame": "K5",
+      "end_frame": "K6",
+      "video_prompt": "The camera glides upward and slows slightly. A boot print appears on the left. [ORB] draws a candle into the snow on the right, red lines revealed. Then it touches the wick: a warm golden flame lights up and its glow spreads softly over the snow. The whole scene turns warmer and cosier."
+    },
+    {
+      "id": "S8",
+      "title": "Finale: große Zahnform",
+      "line": "Merry Christmas and a bright New Year",
+      "cue": "line:6",
+      "duration_s": 5,
+      "start_frame": "K6",
+      "end_frame": "K7",
+      "video_prompt": "Two final boot prints appear and stop just below a large tooth shape outlined in the snow. A soft gust lifts the snow off the tooth area in a gentle swirling flurry, revealing a large glossy red tooth silhouette. Snow sparkles drift through the air. The camera slows down and settles, centered on the tooth."
+    },
+    {
+      "id": "S9",
+      "title": "Abschluss",
+      "line": "from all of us at Renfert",
+      "cue": "line:7",
+      "duration_s": 9,
+      "start_frame": "K7",
+      "end_frame": "K8",
+      "video_prompt": "The camera slowly and smoothly pushes in towards the red tooth until it fills the frame. [ORB] glides in a slow arc across the tooth from left to right and writes the golden calligraphy \"Happy Holidays\" with its sparkling tail; the lettering appears stroke by stroke in shimmering gold. The orb then rises, slows down and dissolves into a soft burst of tiny golden sparkles that drift down like snowflakes. Calm ending, hold the final image."
+    }
   ]
 }
