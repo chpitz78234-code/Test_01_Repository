@@ -13,6 +13,19 @@ Reihenfolge wie im Dokument: **Audio → Referenzbilder → Keyframes → Video 
 | `build/video/` | ausgewählte Clips (Seedance 1.5 Pro, 720p) + `cut.json` (Auswahl, Ziellängen, Überblendungen) |
 | `tools/rough_cut.py` | baut `build/rohschnitt.mp4` aus `cut.json` |
 | `build/rohschnitt.mp4` | Rohschnitt ohne Ton |
+| `hyperframes/` | Endschnitt als HyperFrames-Projekt: Clips, Ton-Mix, Titel, Wort-für-Wort-Captions, Goldpartikel, Abschluss |
+| `tools/prepare_hyperframes.py` | schneidet Clips auf die Musiklänge, mischt Stimme + Musik, berechnet Caption-Timing aus den Sprechpausen |
+| `build/renfert_weihnachtsreel.mp4` | fertiges Reel (1080×1920, 31,8 s, mit Ton) |
+
+## Endschnitt (HyperFrames)
+
+```bash
+python3 tools/prepare_hyperframes.py --voice hyperframes/assets/audio/voiceover_charlotte.mp3 \
+  --music hyperframes/assets/audio/music_snowball_festival_preview.mp3
+cd hyperframes && npx hyperframes@0.9.8 check . && npx hyperframes@0.9.8 render -o ../build/renfert_weihnachtsreel.mp4
+```
+
+Szenenschnitte und Caption-Text stehen oben in `tools/prepare_hyperframes.py`; Gestaltung und Animation in `hyperframes/index.html`.
 
 ## Ablauf
 
