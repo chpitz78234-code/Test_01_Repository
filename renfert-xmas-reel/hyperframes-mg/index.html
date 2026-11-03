@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/captions.js"></script>
+    <style>
+      @font-face { font-family: "Cormorant Garamond"; font-weight: 600; font-style: normal; src: url("assets/fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Cormorant Garamond"; font-weight: 500; font-style: italic; src: url("assets/fonts/cormorant-garamond-latin-500-italic.woff2") format("woff2"); }
+      @font-face { font-family: "Great Vibes"; font-weight: 400; src: url("assets/fonts/great-vibes-latin-400-normal.woff2") format("woff2"); }
+      @font-face { font-family: "Montserrat"; font-weight: 600; src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+
+      :root {
+        --ground: #0b1a33;   /* night blue */
+        --ink: #fff6e6;      /* warm snow white */
+        --gold: #f2c76b;
+        --red: #c8102e;      /* Renfert red (CI) */
+        --red-deep: #7a0a1c;
+        --font-caption: "Cormorant Garamond", Georgia, serif;
+        --font-script: "Great Vibes", cursive;
+        --font-sign: "Montserrat", Arial, sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      .clip { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+
+      /* ---------- the snow world (camera = transform of #world) ---------- */
+      #world { position: absolute; left: 0; top: 0; width: 1080px; height: 6200px; transform-origin: 0 0;
+        background: url("assets/snow.jpg") 0 0 / 1080px 6200px no-repeat; will-change: transform; }
+      .abs { position: absolute; left: 0; top: 0; overflow: visible; }
+      .print { width: 170px; height: 400px; }
+      .puff { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0) 72%); }
+      .flake-w { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0) 72%); }
+
+      #orb-light { width: 360px; height: 360px; border-radius: 50%; margin: -180px 0 0 -180px;
+        background: radial-gradient(circle, rgba(255,214,130,0.55) 0%, rgba(255,196,100,0.22) 35%, rgba(255,196,100,0) 70%); }
+      #orb { width: 44px; height: 44px; border-radius: 50%; margin: -22px 0 0 -22px;
+        background: radial-gradient(circle at 38% 35%, #fffdf0 0%, #ffe8a3 30%, #f2c76b 62%, #c98f2c 100%);
+        box-shadow: 0 0 14px 6px rgba(255,220,140,0.85), 0 0 46px 18px rgba(255,190,90,0.45); }
+      .tail { width: 16px; height: 16px; border-radius: 50%; margin: -8px 0 0 -8px;
+        background: radial-gradient(circle, #fff7d8 0%, #f6d27f 45%, rgba(242,199,107,0) 75%); }
+      .burst { width: 14px; height: 14px; border-radius: 50%; margin: -7px 0 0 -7px;
+        background: radial-gradient(circle, #fff7d8 0%, #f2c76b 45%, rgba(242,199,107,0) 75%); }
+
+      #candle-glow { width: 900px; height: 900px; border-radius: 50%; margin: -450px 0 0 -450px;
+        background: radial-gradient(circle, rgba(255,190,90,0.55) 0%, rgba(255,170,70,0.22) 30%, rgba(255,170,70,0) 66%); }
+
+      #greeting { width: 760px; text-align: center; font-family: var(--font-script); color: #ffe39a;
+        text-shadow: 0 2px 3px rgba(70,0,14,0.85), 0 0 16px rgba(255,200,110,0.55), 0 0 34px rgba(255,170,60,0.25); }
+      #greeting .gl { display: block; font-size: 118px; line-height: 1.02; white-space: nowrap; }
+      #greeting .in { display: inline-block; }
+
+      /* ---------- screen-space light & atmosphere ---------- */
+      #tint { position: absolute; inset: 0; z-index: 19; pointer-events: none; background: #aebfe6; mix-blend-mode: multiply; opacity: 0.55; }
+      #night { position: absolute; inset: 0; z-index: 20; pointer-events: none;
+        background: radial-gradient(ellipse 75% 62% at 50% 46%, rgba(11,26,51,0) 40%, rgba(11,26,51,0.38) 78%, rgba(8,18,40,0.72) 100%); }
+      #warm { position: absolute; inset: 0; z-index: 21; pointer-events: none; opacity: 0;
+        background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(255,184,96,0.30) 0%, rgba(255,160,70,0.14) 55%, rgba(255,150,60,0) 100%); }
+      #snowfall { position: absolute; inset: 0; z-index: 24; pointer-events: none; }
+      .flake { position: absolute; left: 0; top: 0; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 45%, rgba(255,255,255,0) 72%); }
+
+      /* ---------- type ---------- */
+      #title { position: absolute; left: 140px; right: 140px; top: 250px; z-index: 40; text-align: center; opacity: 0;
+        padding: 46px 20px 40px; border-radius: 36px; background: rgba(11,26,51,0.62); box-shadow: 0 10px 60px rgba(11,26,51,0.35); }
+      #title .t { display: block; font-family: var(--font-script); font-weight: 400; font-size: 132px; line-height: 1; color: var(--gold);
+        text-shadow: 0 0 24px rgba(242,199,107,0.45); }
+      #title small { display: block; margin-top: 22px; font-family: var(--font-sign); font-size: 30px; letter-spacing: 0.42em; padding-left: 0.42em; color: var(--ink); }
+
+      #captions { position: absolute; left: 90px; right: 90px; top: 1380px; height: 240px; z-index: 50; }
+      .line { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
+      .plate { display: inline-block; max-width: 900px; padding: 16px 34px 20px; border-radius: 28px;
+        background: rgba(11,26,51,0.68); box-shadow: 0 8px 40px rgba(11,26,51,0.30);
+        font-family: var(--font-caption); font-weight: 600; font-size: 68px; line-height: 1.1; color: var(--ink); }
+      .word { display: inline-block; opacity: 0; margin: 0 0.12em; }
+
+      #sign { position: absolute; left: 250px; right: 250px; top: 105px; z-index: 60; text-align: center; opacity: 0;
+        padding: 26px 0 24px; border-radius: 30px; background: rgba(11,26,51,0.62); }
+      #sign .rule { width: 260px; height: 2px; margin: 0 auto 26px; transform-origin: 50% 50%;
+        background: linear-gradient(90deg, rgba(242,199,107,0), var(--gold), rgba(242,199,107,0)); }
+      #sign .name { font-family: var(--font-sign); font-weight: 600; font-size: 56px; letter-spacing: 0.5em; padding-left: 0.5em; color: var(--ink); }
+      #sign .tag { margin-top: 18px; font-family: var(--font-caption); font-style: italic; font-weight: 500; font-size: 44px; color: var(--gold); }
+
+      #fadeout { position: absolute; inset: 0; z-index: 90; background: var(--ground); opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="31.8" data-width="1080" data-height="1920">
+      <div id="stage" class="clip" data-start="0" data-duration="31.8" data-track-index="0">
+        <div id="world" data-layout-allow-overflow>
+          <svg id="defs" width="0" height="0" style="position:absolute">
+            <defs>
+              <radialGradient id="redFill" cx="50%" cy="42%" r="62%">
+                <stop offset="0%" stop-color="#d81a38" />
+                <stop offset="55%" stop-color="#b10d28" />
+                <stop offset="100%" stop-color="#6e0818" />
+              </radialGradient>
+              <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5" /></filter>
+              <filter id="soft2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.2" /></filter>
+              <filter id="soft8" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9" /></filter>
+              <!-- boot sole, 170 x 400, toe up -->
+              <path id="sole" d="M85 0 C146 0 170 48 168 112 C166 172 146 210 136 246 C131 272 146 300 146 336 C146 376 122 400 85 400 C48 400 26 376 26 336 C26 300 40 272 34 246 C24 210 4 172 2 112 C0 48 26 0 85 0 Z" />
+              <!-- molar, 300 x 300 box -->
+              <path id="molar" d="M60 70 C55 25 115 10 150 42 C185 10 245 25 240 70 C236 120 220 150 215 205 C210 255 200 288 182 288 C162 288 160 250 150 215 C140 250 138 288 118 288 C100 288 90 255 85 205 C80 150 64 120 60 70 Z" />
+            </defs>
+          </svg>
+          <div id="prints"></div>
+          <div id="icons"></div>
+          <svg id="bigtooth" class="abs" width="660" height="660" viewBox="0 0 300 300"></svg>
+          <div id="candle-glow" class="abs" style="opacity:0"></div>
+          <div id="greeting" class="abs" data-layout-allow-occlusion><span class="gl" id="g1" data-layout-allow-occlusion><span class="in" data-layout-allow-occlusion>Happy</span></span><span class="gl" id="g2" data-layout-allow-occlusion><span class="in" data-layout-allow-occlusion>Holidays</span></span></div>
+          <svg id="swash" class="abs" width="700" height="120" viewBox="0 0 700 120"></svg>
+          <div id="flurry"></div>
+          <div id="orb-light" class="abs" style="opacity:0"></div>
+          <div id="tails"></div>
+          <div id="orb" class="abs" style="opacity:0"></div>
+          <div id="bursts"></div>
+        </div>
+      </div>
+
+      <audio id="mix" src="assets/audio/mix.wav" data-start="0" data-duration="31.8" data-track-index="5" data-volume="1"></audio>
+
+      <div id="tint"></div>
+      <div id="night"></div>
+      <div id="warm"></div>
+      <div id="snowfall"></div>
+
+      <h1 id="title"><span class="t">Crafted Together</span><small>A CHRISTMAS POEM</small></h1>
+      <div id="captions"></div>
+      <div id="sign">
+        <div class="rule"></div>
+        <div class="name">RENFERT</div>
+        <div class="tag">Season’s Greetings</div>
+      </div>
+      <div id="fadeout"></div>
+    </div>
+
+    <script>
+      (function () {
+        const DUR = 31.8;
+        const NS = "http://www.w3.org/2000/svg";
+        const $ = (id) => document.getElementById(id);
+
+        // ---------- small math helpers (all deterministic) ----------
+        const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+        const prog = (t, t0, t1) => clamp((t - t0) / (t1 - t0));
+        const sstep = (p) => p * p * (3 - 2 * p);
+        const eOut = (p) => 1 - Math.pow(1 - p, 3);
+        const eIO = (p) => 0.5 - 0.5 * Math.cos(Math.PI * p);
+        const lerp = (a, b, p) => a + (b - a) * p;
+        let seed = 1224;
+        const rnd = () => ((seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296);
+
+        // ---------- camera: glides up the snow field (trapezoidal speed) ----------
+        const CAM0 = 4080, CAM1 = 950, C_T0 = 3.6, C_T1 = 22.6, C_A = 2.0, C_D = 2.5;
+        const C_DUR = C_T1 - C_T0, C_S = CAM0 - CAM1;
+        const C_V = C_S / (C_A / 2 + (C_DUR - C_A - C_D) + C_D / 2);
+        function cam(t) {
+          const u = clamp(t - C_T0, 0, C_DUR);
+          let s;
+          if (u < C_A) s = C_V * u * u / (2 * C_A);
+          else if (u < C_DUR - C_D) s = C_V * (C_A / 2 + (u - C_A));
+          else { const r = C_DUR - u; s = C_S - C_V * r * r / (2 * C_D); }
+          return CAM0 - s;
+        }
+        // S9 push-in around the tooth
+        const zoomAt = (t) => 1 + 0.06 * eIO(prog(t, 23.0, 25.6));
+        const ZX = 540, ZY = 760;
+
+        // ---------- footprints ----------
+        const STEPS = [
+          { t: 1.9, s: "L", sy: 1250 }, { t: 3.95, s: "R", sy: 990 }, { t: 6.6, s: "L", sy: 1010 },
+          { t: 10.2, s: "R", sy: 1000 }, { t: 11.4, s: "L", sy: 980 }, { t: 13.4, s: "R", sy: 980 },
+          { t: 14.6, s: "L", sy: 960 }, { t: 16.3, s: "R", sy: 960 }, { t: 19.9, s: "L", sy: 1010 },
+          { t: 20.8, s: "R", sy: 1140 },
+        ];
+        const printsEl = $("prints");
+        STEPS.forEach((st, k) => {
+          st.x = st.s === "L" ? 440 : 640;
+          st.y = cam(st.t) + st.sy;
+          const wrap = document.createElement("div");
+          wrap.className = "abs";
+          wrap.style.left = st.x - 85 + "px";
+          wrap.style.top = st.y - 200 + "px";
+          wrap.style.transformOrigin = "85px 200px";
+          wrap.innerHTML =
+            `<svg class="print" viewBox="0 0 170 400" style="overflow:visible;transform:${st.s === "L" ? "scaleX(-1) rotate(-4deg)" : "rotate(4deg)"}">` +
+            `<use href="#sole" fill="none" stroke="rgba(34,48,92,0.30)" stroke-width="30" filter="url(#soft8)" transform="translate(6 10)"/>` +
+            `<use href="#sole" fill="none" stroke="#ffffff" stroke-width="22" filter="url(#soft)" opacity="0.95"/>` +
+            `<use href="#sole" fill="url(#redFill)"/>` +
+            `<use href="#sole" fill="none" stroke="rgba(60,0,12,0.55)" stroke-width="10" filter="url(#soft2)"/>` +
+            `<path d="M32 300 C64 292 108 292 140 300" fill="none" stroke="#5c0716" stroke-width="7" stroke-linecap="round" opacity="0.8"/>` +
+            `<g fill="none" stroke="rgba(70,0,16,0.5)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">` +
+            `<path d="M34 62 L85 82 L136 62"/><path d="M26 104 L85 124 L144 104"/><path d="M28 146 L85 166 L142 146"/><path d="M38 188 L85 206 L132 188"/>` +
+            `<path d="M44 326 L85 340 L126 326"/><path d="M42 360 L85 374 L128 360"/></g>` +
+            `<ellipse cx="70" cy="95" rx="30" ry="55" fill="#ffffff" opacity="0.14" filter="url(#soft)"/>` +
+            `</svg>`;
+          printsEl.appendChild(wrap);
+          st.el = wrap;
+          st.puffs = [];
+          for (let i = 0; i < 12; i++) {
+            const p = document.createElement("div");
+            p.className = "puff";
+            printsEl.appendChild(p);
+            const a = (i / 12) * Math.PI * 2 + rnd() * 0.4;
+            st.puffs.push({ el: p, a, d: 60 + rnd() * 50, size: 14 + rnd() * 16, rx: 90, ry: 205 });
+          }
+        });
+
+        // ---------- line icons drawn into the snow ----------
+        const iconsEl = $("icons");
+        function makeIcon(cx, cy, w, h, strokes, k = 1) {
+          const svg = document.createElementNS(NS, "svg");
+          svg.setAttribute("class", "abs");
+          svg.setAttribute("width", w * k); svg.setAttribute("height", h * k);
+          svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+          svg.style.left = cx - (w * k) / 2 + "px"; svg.style.top = cy - (h * k) / 2 + "px";
+          iconsEl.appendChild(svg);
+          const layers = [
+            { stroke: "rgba(34,48,92,0.30)", w: 26, f: "url(#soft8)", dx: 3, dy: 5 },
+            { stroke: "#ffffff", w: 24, f: "url(#soft)", dx: 0, dy: 0, o: 0.95 },
+            { stroke: "#b30e29", w: 12.5 },
+            { stroke: "rgba(60,0,12,0.45)", w: 5, f: "url(#soft2)", dx: 1, dy: 2 },
+            { stroke: "#ff7d8a", w: 2.6, dx: -1.5, dy: -2, o: 0.55 },
+          ];
+          const out = strokes.map((d) => {
+            const set = layers.map((L) => {
+              const p = document.createElementNS(NS, "path");
+              p.setAttribute("d", d);
+              p.setAttribute("fill", "none");
+              p.setAttribute("stroke", L.stroke);
+              p.setAttribute("stroke-width", L.w);
+              p.setAttribute("stroke-linecap", "round");
+              p.setAttribute("stroke-linejoin", "round");
+              if (L.f) p.setAttribute("filter", L.f);
+              if (L.o) p.setAttribute("opacity", L.o);
+              if (L.dx || L.dy) p.setAttribute("transform", `translate(${L.dx || 0} ${L.dy || 0})`);
+              svg.appendChild(p);
+              return p;
+            });
+            const len = set[2].getTotalLength();
+            set.forEach((p) => { p.style.strokeDasharray = len + 1; p.style.strokeDashoffset = len + 1; });
+            return { set, len, path: set[2], ox: cx - (w * k) / 2, oy: cy - (h * k) / 2, k };
+          });
+          return { svg, strokes: out };
+        }
+        // a drawing plan: strokes drawn one after the other between t0 and t1, short hops between them
+        function plan(icon, t0, t1, hop = 0.12) {
+          const total = icon.strokes.reduce((a, s) => a + s.len, 0);
+          const avail = t1 - t0 - hop * (icon.strokes.length - 1);
+          let t = t0;
+          icon.strokes.forEach((s, i) => { s.a = t; s.b = t + avail * s.len / total; t = s.b + hop; });
+          return icon;
+        }
+        const pt = (s, p) => { const q = s.path.getPointAtLength(s.len * p); return { x: s.ox + q.x * s.k, y: s.oy + q.y * s.k }; };
+        function penAt(icon, t) {
+          const S = icon.strokes;
+          for (let i = 0; i < S.length; i++) {
+            const s = S[i];
+            if (t <= s.b) {
+              if (t >= s.a) return pt(s, (t - s.a) / (s.b - s.a));
+              const prev = S[i - 1];
+              const a = pt(prev, 1), b = pt(s, 0), p = eIO(prog(t, prev.b, s.a));
+              return { x: lerp(a.x, b.x, p), y: lerp(a.y, b.y, p) - 30 * Math.sin(Math.PI * p) };
+            }
+          }
+          return pt(S[S.length - 1], 1);
+        }
+        function inkIcon(icon, t) {
+          icon.strokes.forEach((s) => {
+            const p = clamp((t - s.a) / (s.b - s.a));
+            const off = (s.len + 1) * (1 - p);
+            s.set.forEach((el) => (el.style.strokeDashoffset = off));
+          });
+        }
+
+        // Icon 1: tooth shaped with hammer and chisel (left, opposite step 2)
+        const I1 = plan(makeIcon(200, cam(4.25) + 1040, 330, 330, [
+          "M48 146 C44 110 92 98 120 124 C148 98 196 110 192 146 C189 186 176 210 172 254 C168 294 160 320 146 320 C130 320 128 290 120 262 C112 290 110 320 94 320 C80 320 72 294 68 254 C64 210 51 186 48 146 Z",
+          "M296 54 L214 108",
+          "M214 108 L170 134",
+          "M318 4 L276 46",
+          "M268 18 L300 52",
+          "M158 104 L150 86", "M176 100 L184 82", "M142 116 L124 108",
+        ], 1.2), 4.25, 6.25);
+        // Icon 2: smile (right, opposite step 3)
+        const I2 = plan(makeIcon(850, cam(7.05) + 900, 300, 220, [
+          "M22 70 Q150 128 278 70",
+          "M22 70 Q150 222 278 70",
+          "M76 94 Q84 124 102 107 Q120 128 134 110 Q150 130 168 110 Q182 128 200 107 Q218 124 224 94",
+          "M14 56 L30 84", "M286 56 L270 84",
+        ], 1.35), 7.05, 8.85);
+        // Icon 3: candle (left, opposite step 8)
+        const CANDLE = { x: 215, y: cam(16.6) + 930 }, CK = 1.55;
+        const I3 = plan(makeIcon(CANDLE.x, CANDLE.y, 200, 300, [
+          "M64 120 L64 280 Q64 292 76 292 L124 292 Q136 292 136 280 L136 120 Z",
+          "M100 120 L100 90",
+        ], CK), 16.6, 17.6);
+        // flame
+        const flame = document.createElementNS(NS, "g");
+        flame.innerHTML =
+          `<ellipse cx="0" cy="-8" rx="46" ry="62" fill="rgba(255,200,100,0.45)" filter="url(#soft8)"/>` +
+          `<path d="M0 -70 C18 -42 30 -20 26 0 C22 22 -22 22 -26 0 C-30 -20 -18 -42 0 -70 Z" fill="#ffb84a"/>` +
+          `<path d="M0 -46 C9 -30 15 -16 12 -3 C9 10 -9 10 -12 -3 C-15 -16 -9 -30 0 -46 Z" fill="#fff4c8"/>`;
+        flame.setAttribute("transform", "translate(100 74) scale(0)");
+        I3.svg.appendChild(flame);
+        const WICK = { x: CANDLE.x, y: CANDLE.y + (90 - 150) * CK };
+        $("candle-glow").style.left = CANDLE.x + "px";
+        $("candle-glow").style.top = CANDLE.y - 140 + "px";
+
+        // ---------- the big tooth (finale) ----------
+        const TOOTH = { x: 540, y: 1690, size: 780 };
+        const bt = $("bigtooth");
+        bt.style.left = TOOTH.x - TOOTH.size / 2 + "px";
+        bt.style.top = TOOTH.y - TOOTH.size / 2 + "px";
+        bt.innerHTML =
+          `<defs><filter id="feather" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>` +
+          `<mask id="toothReveal" maskUnits="userSpaceOnUse" x="-50" y="-50" width="400" height="400"><circle id="revealC" cx="150" cy="150" r="0" fill="#fff" filter="url(#feather)"/></mask></defs>` +
+          `<g id="toothOutline" opacity="0">` +
+          `  <use href="#molar" fill="none" stroke="rgba(34,48,92,0.35)" stroke-width="9" filter="url(#soft2)" transform="translate(2 4)"/>` +
+          `  <use href="#molar" fill="none" stroke="#ffffff" stroke-width="4" filter="url(#soft2)" opacity="0.8"/>` +
+          `</g>` +
+          `<g mask="url(#toothReveal)">` +
+          `  <use href="#molar" fill="none" stroke="rgba(34,48,92,0.35)" stroke-width="16" filter="url(#soft8)" transform="translate(3 6)"/>` +
+          `  <use href="#molar" fill="none" stroke="#ffffff" stroke-width="12" filter="url(#soft)"/>` +
+          `  <use href="#molar" fill="url(#redFill)"/>` +
+          `  <use href="#molar" fill="none" stroke="rgba(60,0,12,0.5)" stroke-width="5" filter="url(#soft2)"/>` +
+          `  <ellipse cx="118" cy="92" rx="34" ry="22" fill="#fff" opacity="0.16" filter="url(#soft)"/>` +
+          `</g>`;
+        const revealC = bt.querySelector("#revealC");
+        const toothOutline = bt.querySelector("#toothOutline");
+
+        // greeting written by the orb (S9)
+        const greet = $("greeting");
+        greet.style.left = TOOTH.x - 380 + "px";
+        greet.style.top = TOOTH.y - 165 + "px";
+        const G1 = $("g1"), G2 = $("g2");
+        // write-on windows and pen paths (world coords; line centres)
+        const W1 = { a: 24.55, b: 25.75, y: TOOTH.y - 165 + 75 };
+        const W2 = { a: 25.9, b: 27.45, y: TOOTH.y - 165 + 195 };
+        const IN1 = G1.querySelector(".in"), IN2 = G2.querySelector(".in");
+        const GX = TOOTH.x - 380;
+        // pen path from fixed composition coordinates (Great Vibes 118px: "Happy" ~290px, "Holidays" ~420px wide)
+        W1.x0 = TOOTH.x - 150; W1.x1 = TOOTH.x + 145;
+        W2.x0 = TOOTH.x - 215; W2.x1 = TOOTH.x + 210;
+        // sparkle swash under the greeting
+        const sw = $("swash");
+        sw.style.left = TOOTH.x - 350 + "px";
+        sw.style.top = TOOTH.y + 70 + "px";
+        sw.innerHTML = `<path id="swp" d="M40 60 C180 110 300 10 430 50 C540 84 610 40 660 30" fill="none" stroke="#f6d37f" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 14" style="filter:drop-shadow(0 0 6px rgba(255,200,110,0.9))"/>`;
+        const swp = sw.querySelector("#swp");
+        const SWLEN = swp.getTotalLength();
+        const swPt = (p) => { const q = swp.getPointAtLength(SWLEN * p); return { x: TOOTH.x - 350 + q.x, y: TOOTH.y + 70 + q.y }; };
+
+        // flurry when the tooth is blown free (S8)
+        const flurryEl = $("flurry");
+        const FLURRY = [];
+        for (let i = 0; i < 46; i++) {
+          const f = document.createElement("div");
+          f.className = "flake-w";
+          flurryEl.appendChild(f);
+          FLURRY.push({ el: f, a: rnd() * 6.283, r0: 40 + rnd() * 230, spin: 1.5 + rnd() * 2.5, out: 180 + rnd() * 260, size: 8 + rnd() * 18, d: rnd() * 0.5 });
+        }
+
+        // ---------- the golden orb: a pure function of time ----------
+        const P0 = STEPS[0];
+        const E = { cx: P0.x, cy: P0.y, rx: 175, ry: 255, a0: -0.28 };
+        const ellipsePt = (a) => ({ x: E.cx + E.rx * Math.cos(a), y: E.cy + E.ry * Math.sin(a) });
+        const walkPt = (t) => {
+          const ph = (t - 10) * 6.283 / 2.6;
+          const lead = sstep(prog(t, 12.6, 14.0));
+          return { x: lerp(760, 640, lead) + 58 * Math.cos(ph), y: cam(t) + lerp(960, 760, lead) + 40 * Math.sin(ph * 2) };
+        };
+        const flamePt = (t) => ({ x: WICK.x + 6 * Math.sin(t * 2.1), y: WICK.y - 150 + 10 * Math.sin(t * 2.7) });
+        const toothHover = (t) => ({ x: TOOTH.x - 255 + 8 * Math.sin(t * 1.7), y: TOOTH.y - 40 + 16 * Math.sin(t * 2.2) });
+        const writePt = (t) => {
+          const L = t < W2.a ? W1 : W2;
+          const p = prog(t, L.a, L.b);
+          return { x: lerp(L.x0, L.x1, p), y: L.y + 30 * Math.sin(p * 17) - 10 };
+        };
+        const PH = [
+          { t0: 2.35, t1: 2.75, f: () => ellipsePt(E.a0) },
+          { t0: 2.75, t1: 3.65, f: (t) => ellipsePt(E.a0 + 6.283 * eIO(prog(t, 2.75, 3.65))) },
+          { t0: 3.65, t1: 4.25, move: 140 },
+          { t0: 4.25, t1: 6.25, f: (t) => penAt(I1, t) },
+          { t0: 6.25, t1: 7.05, move: 220 },
+          { t0: 7.05, t1: 8.85, f: (t) => penAt(I2, t) },
+          { t0: 8.85, t1: 9.35, f: (t) => { const q = penAt(I2, 8.85); return { x: q.x, y: q.y - 46 * Math.sin(Math.PI * prog(t, 8.85, 9.35)) }; } },
+          { t0: 9.35, t1: 10.0, move: 60 },
+          { t0: 10.0, t1: 16.2, f: walkPt },
+          { t0: 16.2, t1: 16.6, move: 50 },
+          { t0: 16.6, t1: 17.6, f: (t) => penAt(I3, t) },
+          { t0: 17.6, t1: 17.85, move: 10 },
+          { t0: 17.85, t1: 19.7, f: (t) => { const p = eOut(prog(t, 17.85, 18.3)); const a = WICK, b = flamePt(t); return { x: lerp(a.x, b.x, p), y: lerp(a.y, b.y, p) }; } },
+          { t0: 19.7, t1: 20.9, move: 120 },
+          { t0: 20.9, t1: 24.35, f: toothHover },
+          { t0: 24.35, t1: 24.55, move: 20 },
+          { t0: 24.55, t1: 27.45, f: (t) => (t > W1.b && t < W2.a ? (() => { const p = eIO(prog(t, W1.b, W2.a)); return { x: lerp(W1.x1, W2.x0, p), y: lerp(W1.y, W2.y, p) - 40 * Math.sin(Math.PI * p) }; })() : writePt(t)) },
+          { t0: 27.45, t1: 28.4, f: (t) => { const p = prog(t, 27.45, 28.4); const s = swPt(Math.min(1, p * 1.25)); return { x: s.x, y: s.y - 260 * eOut(clamp((p - 0.6) / 0.4)) }; } },
+        ];
+        function orbAt(t) {
+          if (t < PH[0].t0) return PH[0].f(PH[0].t0);
+          for (let i = 0; i < PH.length; i++) {
+            const ph = PH[i];
+            if (t <= ph.t1 || i === PH.length - 1) {
+              if (!ph.move) return ph.f(Math.min(t, ph.t1));
+              const a = PH[i - 1].f(PH[i - 1].t1), b = PH[i + 1].f(PH[i + 1].t0), p = eIO(prog(t, ph.t0, ph.t1));
+              return { x: lerp(a.x, b.x, p), y: lerp(a.y, b.y, p) - ph.move * Math.sin(Math.PI * p) };
+            }
+          }
+        }
+        const orbAlpha = (t) => (t < 2.35 ? 0 : t < 28.4 ? 1 : 0);
+        const orbScale = (t) => (t < 2.35 ? 0 : t < 2.75 ? eOut(prog(t, 2.35, 2.75)) : t < 27.9 ? 1 : lerp(1, 0.55, prog(t, 27.9, 28.4)));
+
+        const tailsEl = $("tails"), TAILS = [];
+        for (let i = 0; i < 26; i++) {
+          const d = document.createElement("div");
+          d.className = "tail abs";
+          tailsEl.appendChild(d);
+          TAILS.push({ el: d, j: rnd() * 6.283 });
+        }
+        const burstsEl = $("bursts"), BURST = [];
+        for (let i = 0; i < 40; i++) {
+          const d = document.createElement("div");
+          d.className = "burst abs";
+          burstsEl.appendChild(d);
+          BURST.push({ el: d, a: rnd() * 6.283, v: 60 + rnd() * 200, fall: 50 + rnd() * 90, size: 0.5 + rnd() * 1.1 });
+        }
+
+        // ---------- falling snow (screen space) ----------
+        const snowEl = $("snowfall"), FLAKES = [];
+        for (let i = 0; i < 80; i++) {
+          const f = document.createElement("div");
+          f.className = "flake";
+          const s = 3 + rnd() * 9;
+          f.style.width = f.style.height = s + "px";
+          snowEl.appendChild(f);
+          FLAKES.push({ el: f, x: rnd() * 1080, y: rnd() * 1960, v: 30 + rnd() * 60, sway: 10 + rnd() * 30, per: 3 + rnd() * 4, ph: rnd() * 6.283, o: 0.35 + rnd() * 0.5 });
+        }
+
+        // ---------- per-frame render ----------
+        const world = $("world"), orb = $("orb"), orbLight = $("orb-light");
+        const glow = $("candle-glow"), warm = $("warm");
+        function render(t) {
+          // camera
+          const c = cam(t), z = zoomAt(t);
+          world.style.transform = `translate(${ZX}px, ${ZY}px) scale(${z.toFixed(5)}) translate(${-ZX}px, ${(-ZY - c).toFixed(2)}px)`;
+
+          // footprints press in on their own
+          STEPS.forEach((st) => {
+            const p = prog(t, st.t, st.t + 0.32);
+            st.el.style.opacity = p > 0 ? Math.min(1, p * 2.2).toFixed(3) : 0;
+            st.el.style.transform = `scale(${(1.14 - 0.14 * eOut(p)).toFixed(4)})`;
+            const q = prog(t, st.t + 0.05, st.t + 0.85);
+            st.puffs.forEach((pf) => {
+              const on = q > 0 && q < 1;
+              pf.el.style.opacity = on ? (0.9 * (1 - q)).toFixed(3) : 0;
+              if (on) {
+                const r = pf.d * eOut(q);
+                const x = st.x + Math.cos(pf.a) * (pf.rx + r) - pf.size / 2;
+                const y = st.y + Math.sin(pf.a) * (pf.ry * 0.85 + r) - pf.size / 2;
+                const s = pf.size * (1 - 0.5 * q);
+                pf.el.style.width = pf.el.style.height = s.toFixed(1) + "px";
+                pf.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+              }
+            });
+          });
+
+          // icons are inked by the pen
+          inkIcon(I1, t); inkIcon(I2, t); inkIcon(I3, t);
+
+          // candle flame + glow + overall warmth
+          const fl = eOut(prog(t, 17.8, 18.25));
+          const flick = 1 + 0.05 * Math.sin(t * 13.1) + 0.03 * Math.sin(t * 7.3);
+          flame.setAttribute("transform", `translate(100 76) scale(${(fl * 0.95).toFixed(3)} ${(fl * flick).toFixed(3)})`);
+          glow.style.opacity = (fl * (0.85 + 0.15 * Math.sin(t * 9.1))).toFixed(3);
+          warm.style.opacity = (0.35 * sstep(prog(t, 12.9, 16.0)) + 0.65 * fl).toFixed(3);
+
+          // tooth: faint outline, then blown free
+          toothOutline.setAttribute("opacity", (0.9 * sstep(prog(t, 19.4, 20.6)) * (1 - prog(t, 22.2, 22.8))).toFixed(3));
+          revealC.setAttribute("r", (250 * eIO(prog(t, 21.2, 22.7))).toFixed(2));
+          const fq = prog(t, 21.0, 23.2);
+          FLURRY.forEach((f) => {
+            const q = clamp((fq - f.d * 0.3) / 0.7);
+            const on = q > 0 && q < 1;
+            f.el.style.opacity = on ? (Math.sin(Math.PI * q) * 0.9).toFixed(3) : 0;
+            if (on) {
+              const a = f.a + f.spin * q * 3.2;
+              const r = f.r0 + f.out * eOut(q);
+              const x = TOOTH.x + Math.cos(a) * r * 1.1, y = TOOTH.y + Math.sin(a) * r - 120 * q;
+              f.el.style.width = f.el.style.height = f.size + "px";
+              f.el.style.transform = `translate(${(x - f.size / 2).toFixed(1)}px, ${(y - f.size / 2).toFixed(1)}px)`;
+            }
+          });
+
+          // greeting write-on (left-to-right reveal following the pen)
+          const r1 = prog(t, W1.a, W1.b), r2 = prog(t, W2.a, W2.b);
+          IN1.style.clipPath = `inset(-30% ${((1 - r1) * 100).toFixed(2)}% -30% -8%)`;
+          IN2.style.clipPath = `inset(-30% ${((1 - r2) * 100).toFixed(2)}% -30% -8%)`;
+          const swq = prog(t, 27.45, 28.2);
+          swp.style.strokeDashoffset = 0;
+          swp.setAttribute("stroke-dasharray", `2 14`);
+          sw.style.clipPath = `inset(-20% ${((1 - swq) * 100).toFixed(2)}% -20% -2%)`;
+          sw.style.opacity = (swq > 0 ? 0.75 + 0.25 * Math.sin(t * 6) : 0).toFixed(3);
+
+          // orb + light + glitter tail
+          const o = orbAt(t), oa = orbAlpha(t), os = orbScale(t);
+          orb.style.opacity = oa;
+          orb.style.transform = `translate(${o.x.toFixed(1)}px, ${o.y.toFixed(1)}px) scale(${os.toFixed(3)})`;
+          orbLight.style.opacity = (oa * os * 0.9).toFixed(3);
+          orbLight.style.transform = `translate(${o.x.toFixed(1)}px, ${o.y.toFixed(1)}px)`;
+          TAILS.forEach((tl_, i) => {
+            const tt = t - (i + 1) * 0.03;
+            const a = orbAlpha(tt) * oa;
+            if (!a || tt < 2.5) { tl_.el.style.opacity = 0; return; }
+            const p = orbAt(tt);
+            const j = 7 * Math.sin(tl_.j + t * 4.3) * (i / TAILS.length);
+            const s = (1 - i / TAILS.length) * 1.15 * os;
+            tl_.el.style.opacity = ((1 - i / TAILS.length) * 0.9).toFixed(3);
+            tl_.el.style.transform = `translate(${(p.x + j).toFixed(1)}px, ${(p.y - j * 0.6).toFixed(1)}px) scale(${s.toFixed(3)})`;
+          });
+          // the orb dissolves into a burst of golden sparkles
+          const bq = prog(t, 28.35, 30.2);
+          const bo = orbAt(28.4);
+          BURST.forEach((b) => {
+            const on = bq > 0 && bq < 1;
+            b.el.style.opacity = on ? (1 - bq).toFixed(3) : 0;
+            if (on) {
+              const r = b.v * eOut(Math.min(1, bq * 2.2));
+              const x = bo.x + Math.cos(b.a) * r, y = bo.y + Math.sin(b.a) * r * 0.8 + b.fall * bq * bq * 2.4;
+              b.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${b.size.toFixed(2)})`;
+            }
+          });
+
+          // falling snow; a little denser from scene 6
+          const dens = 50 + Math.round(30 * sstep(prog(t, 12.9, 15.0)));
+          FLAKES.forEach((f, i) => {
+            if (i >= dens) { f.el.style.opacity = 0; return; }
+            const y = ((f.y + f.v * t) % 1990) - 40;
+            const x = f.x + Math.sin(t * 6.283 / f.per + f.ph) * f.sway;
+            f.el.style.opacity = f.o.toFixed(2);
+            f.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+          });
+        }
+
+        // ---------- GSAP timeline (seeked by HyperFrames) ----------
+        const tl = gsap.timeline({ paused: true });
+        const clock = { t: 0 };
+        tl.to(clock, { t: DUR, duration: DUR, ease: "none", onUpdate: () => render(clock.t) }, 0);
+
+        // title
+        tl.fromTo("#title", { opacity: 0, y: 40, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1, ease: "power2.out" }, 0.35);
+        tl.to("#title", { opacity: 0, y: -30, filter: "blur(8px)", duration: 0.7, ease: "power1.in" }, 2.85);
+
+        // captions
+        const box = $("captions");
+        window.CAPTIONS.forEach((c, i) => {
+          const line = document.createElement("div");
+          line.className = "line";
+          const plate = document.createElement("div");
+          plate.className = "plate";
+          line.appendChild(plate);
+          c.words.forEach((w) => { const sp = document.createElement("span"); sp.className = "word"; sp.textContent = w.w; plate.appendChild(sp); });
+          box.appendChild(line);
+          const words = plate.querySelectorAll(".word");
+          tl.fromTo(plate, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, c.start - 0.22);
+          c.words.forEach((w, k) => {
+            tl.fromTo(words[k], { opacity: 0, y: 16, filter: "blur(6px)", color: "#f2c76b" },
+                      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.38, ease: "power2.out" }, w.t - 0.06);
+            tl.to(words[k], { color: "#fff6e6", duration: 0.7, ease: "sine.out" }, w.t + 0.3);
+          });
+          const next = window.CAPTIONS[i + 1];
+          const out = next ? Math.min(next.start - 0.12, c.end + 0.9) : 28.3;
+          tl.to(line, { opacity: 0, y: -12, duration: 0.3, ease: "power1.in" }, out - 0.3);
+        });
+
+        // sign-off + end fade
+        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" }, 28.8);
+        tl.fromTo("#sign .rule", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power2.inOut" }, 28.9);
+        tl.fromTo("#sign .name", { scale: 1.08, filter: "blur(6px)" }, { scale: 1, filter: "blur(0px)", duration: 1.4, ease: "power3.out" }, 28.8);
+        tl.to("#fadeout", { opacity: 1, duration: 0.6, ease: "sine.in" }, DUR - 0.6);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["main"] = tl;
+        tl.seek(0);
+        render(0);
+      })();
+    </script>
+  </body>
+</html>

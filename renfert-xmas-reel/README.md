@@ -52,3 +52,22 @@ Danach die Jobs aus `build/jobs.json` der Reihe nach in Higgsfield abarbeiten:
 - S3 und S4 sind am gesprochenen Text gemessen kürzer als die 4 s Mindestlänge von `seedance_2_0`.
   Im Schnitt kürzen statt stark beschleunigen, oder S3+S4 als einen Clip K1→K3 generieren.
 - Aussprache „Renfert“ nach dem ersten Voiceover prüfen.
+
+## Reine Motion-Graphics-Version (ohne KI-Video)
+
+`hyperframes-mg/` baut das komplette Storyboard als Code-Animation – keine generierten Clips oder Bilder:
+
+| Element | Umsetzung |
+| --- | --- |
+| Schneefläche | prozedurale Textur (`tools/gen_snow_texture.js`: SVG-Rauschen + Lichtberechnung), Kamera gleitet per Transform nach oben |
+| Fußspuren | SVG-Stiefelsohle mit Profil, Renfert-Rot, Schneerand und Schnee-Puffs beim Eindrücken; alle Spitzen nach oben |
+| Kugel | goldene Leuchtkugel mit Lichtschein und Glitzerschweif, Position ist eine reine Zeitfunktion |
+| Icons | Zahn mit Hammer & Meißel, Lächeln, Kerze – Strich für Strich gezeichnet, die Kugel ist die Stiftspitze |
+| Kerze | Flamme entzündet sich, flackert, warmes Licht breitet sich aus |
+| Finale | großer roter Zahn wird weich freigeweht (Schneewirbel), Kugel schreibt „Happy Holidays“, löst sich in Funken auf |
+| Ton/Text | Voiceover + Musik-Mix, Wort-für-Wort-Captions, Titel, Abschluss „RENFERT – Season’s Greetings“ |
+
+```bash
+node tools/gen_snow_texture.js
+cd hyperframes-mg && npx hyperframes@0.9.8 check . && npx hyperframes@0.9.8 render -o ../build/renfert_weihnachtsreel_motion.mp4
+```
