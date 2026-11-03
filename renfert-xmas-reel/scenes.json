@@ -2,7 +2,7 @@
   "project": "renfert-xmas-reel",
   "source": "Claude Docs: Renfert Weihnachtsreel – Storyboard & Prompt Sheet (Stand 2026-11-03)",
   "format": { "aspect": "9:16", "width": 1080, "height": 1920 },
-  "brand": { "renfert_red_hex": null, "note": "CI-Wert noch offen (Checkliste im Dokument)" },
+  "brand": { "renfert_red_hex": "#C8102E", "renfert_red_rgb": [200, 16, 46], "note": "Zielwert für die Farbkorrektur aller Clips; Bildmodelle setzen HEX-Werte nicht verlässlich um, daher bleibt das Rot im Prompt sprachlich beschrieben." },
 
   "blocks": {
     "STYLE": "Stylized 3D animated feature film look, cinematic premium Christmas commercial, vertical 9:16 composition, strict top-down overhead camera looking straight down at a flat field of fresh soft snow. Fine sparkling snow crystals, soft subsurface scattering, gentle rounded forms. Night-time mood: deep blue shadows, cream-white snow, warm golden highlights. Beneath the snow lies a smooth, slightly glossy, deep saturated red surface that becomes visible wherever snow is cleared away. Soft warm cinematic lighting, subtle vignette, shallow depth of field, calm and serene atmosphere, light snowfall drifting slowly through frame.",

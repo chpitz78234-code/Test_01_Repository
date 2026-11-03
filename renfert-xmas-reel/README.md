@@ -27,11 +27,11 @@ Danach die Jobs aus `build/jobs.json` der Reihe nach in Higgsfield abarbeiten:
 1. **Referenzbilder** R_STEP, R_ORB, R_ICON1–4 (`nano_banana_pro`, 9:16) – bestes Bild je Element festlegen.
 2. **Keyframes** K0–K8 – K1–K8 jeweils mit dem vorherigen Keyframe + den genannten Referenzen als `image_references`.
 3. **Video** S1–S9 (`seedance_2_0`, 9:16, 1080p, ohne Ton) mit `start_image`/`end_image`, 3 Varianten pro Szene.
-4. **Schnitt**: 4–6 Frames überblenden, Clips per `speed_factor` an `target_duration_s` anpassen.
+4. **Schnitt**: 4–6 Frames überblenden, Clips per `speed_factor` an `target_duration_s` anpassen,
+   Rot in allen Clips auf Renfert-Rot **#C8102E** (RGB 200, 16, 46) angleichen.
 
 ## Offene Punkte
 
 - S3 und S4 sind am gesprochenen Text gemessen kürzer als die 4 s Mindestlänge von `seedance_2_0`.
   Im Schnitt kürzen statt stark beschleunigen, oder S3+S4 als einen Clip K1→K3 generieren.
-- Renfert-Rot (CI-HEX) fehlt noch in `scenes.json` → `brand.renfert_red_hex`.
 - Aussprache „Renfert“ nach dem ersten Voiceover prüfen.
