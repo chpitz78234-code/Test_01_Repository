@@ -9,6 +9,10 @@ Reihenfolge wie im Dokument: **Audio → Referenzbilder → Keyframes → Video 
 | `tools/pipeline.py` | `resolve`, `voiceover`, `retime` (nur Python-Standardbibliothek) |
 | `build/jobs.json` | 24 Jobs in Ausführungsreihenfolge mit Modell, Parametern, Abhängigkeiten, aufgelöstem Prompt |
 | `build/PROMPTS.md` | dieselben Prompts zum Kopieren |
+| `build/refs/`, `build/keyframes/` | Referenzbilder und Keyframes K0–K8 (Vorschauen, Higgsfield-Job-IDs) |
+| `build/video/` | ausgewählte Clips (Seedance 1.5 Pro, 720p) + `cut.json` (Auswahl, Ziellängen, Überblendungen) |
+| `tools/rough_cut.py` | baut `build/rohschnitt.mp4` aus `cut.json` |
+| `build/rohschnitt.mp4` | Rohschnitt ohne Ton |
 
 ## Ablauf
 

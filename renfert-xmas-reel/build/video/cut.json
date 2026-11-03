@@ -1,0 +1,67 @@
+{
+  "model": "seedance1_5, 720p, 9:16, ohne Ton",
+  "fps": 24,
+  "width": 720,
+  "height": 1280,
+  "crossfade_s": 0.25,
+  "clips": [
+    {
+      "scene": "S1",
+      "file": "S1_v1.mp4",
+      "target_s": 3,
+      "job_id": "30c21d06-4900-438a-95c2-a598812bea1f"
+    },
+    {
+      "scene": "S2",
+      "file": "S2_v2.mp4",
+      "target_s": 4,
+      "job_id": "775cde79-b93c-48b4-92ba-ddadfcfeb481"
+    },
+    {
+      "scene": "S3",
+      "file": "S3_v1.mp4",
+      "target_s": 4,
+      "job_id": "2b31354a-dbbf-4efd-9fd9-395cf622030e"
+    },
+    {
+      "scene": "S4",
+      "file": "S4_v2.mp4",
+      "target_s": 3,
+      "job_id": "5af7da62-38fd-44fb-b7b3-28727805e4ef"
+    },
+    {
+      "scene": "S6",
+      "file": "S6_v2.mp4",
+      "target_s": 6,
+      "job_id": "474f78a8-57b8-406c-a70d-bc4c26ecf84b",
+      "crossfade_in_s": 1.0,
+      "note": "Ersetzt auch S5: S5 (K3->K4) ließ sich in 4 Versuchen nicht sauber erzeugen; weiche 1-s-Überblendung von S4."
+    },
+    {
+      "scene": "S7",
+      "file": "S7_v2.mp4",
+      "target_s": 7,
+      "job_id": "f7dc001f-72d2-481c-9002-113813f89f8d"
+    },
+    {
+      "scene": "S8",
+      "file": "S8_v1.mp4",
+      "target_s": 5,
+      "job_id": "04ed8d60-6d9c-4358-b9fa-5ec458115689"
+    },
+    {
+      "scene": "S9",
+      "file": "S9_v1.mp4",
+      "target_s": 9,
+      "job_id": "b4f18d55-e2a6-4565-8a50-5188394ded8b"
+    }
+  ],
+  "rejected": {
+    "S5": [
+      "961f4f48-f9ec-40da-a983-f8b4d51795f9",
+      "01cc16b0-b730-4a83-a13a-78f2a356c99d",
+      "d1a7c252-6105-4de4-a255-0826cbb7b075",
+      "3a158c1d-fc07-4783-a567-024675cc3bee"
+    ]
+  }
+}
