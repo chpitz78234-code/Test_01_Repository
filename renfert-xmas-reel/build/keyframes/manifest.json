@@ -1,0 +1,71 @@
+{
+  "model": "nano_banana_pro (Higgsfield meldet nano_banana_2)",
+  "resolution": "2k, 9:16 (1536x2752)",
+  "rule": "Alle Fußabdrücke: Spitze oben, Ferse mit Trennlinie unten",
+  "keyframes": [
+    {
+      "id": "K0",
+      "job_id": "190f3d37-a9c1-4074-a3c5-e49b53f22179",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_132409_190f3d37-a9c1-4074-a3c5-e49b53f22179.png",
+      "preview": "K0.webp",
+      "note": "Neu erzeugt: erste Version (d0e26e90) war zu unscharf"
+    },
+    {
+      "id": "K1",
+      "job_id": "dc17d0d7-dfa5-4455-bf71-902307dd343a",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_132516_dc17d0d7-dfa5-4455-bf71-902307dd343a.png",
+      "preview": "K1.webp",
+      "note": ""
+    },
+    {
+      "id": "K2",
+      "job_id": "0a0cd110-1b81-4ab8-bd4d-1a2589596f95",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_133438_0a0cd110-1b81-4ab8-bd4d-1a2589596f95.png",
+      "preview": "K2.webp",
+      "note": "Erster Versuch vom Inhaltsfilter abgelehnt (nicht berechnet), Prompt entschärft"
+    },
+    {
+      "id": "K3",
+      "job_id": "b8c77bb3-95e2-4372-9451-eea14044addb",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_133925_b8c77bb3-95e2-4372-9451-eea14044addb.png",
+      "preview": "K3.webp",
+      "note": "Neu erzeugt: erste Version (a3bcb458) hatte verdrehte Fußabdrücke"
+    },
+    {
+      "id": "K4",
+      "job_id": "cda64cff-2f9e-4d10-8a73-06c0dc984cff",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_134219_cda64cff-2f9e-4d10-8a73-06c0dc984cff.png",
+      "preview": "K4.webp",
+      "note": "Neu erzeugt: erste Version (e15a7638) hatte verdrehte/zu kleine Abdrücke"
+    },
+    {
+      "id": "K5",
+      "job_id": "f6b00026-1e98-464f-b0cd-d73c32ec3d17",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_134326_f6b00026-1e98-464f-b0cd-d73c32ec3d17.png",
+      "preview": "K5.webp",
+      "note": "Gleiches Muster wie K4 (nach zwei Schritten wiederholt sich das Bild)"
+    },
+    {
+      "id": "K6",
+      "job_id": "666ba775-4cdb-49b7-8b3a-1184217f0419",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_134507_666ba775-4cdb-49b7-8b3a-1184217f0419.png",
+      "preview": "K6.webp",
+      "note": ""
+    },
+    {
+      "id": "K7",
+      "job_id": "6acabb80-46b4-4111-b074-ff910796a2a7",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_134732_6acabb80-46b4-4111-b074-ff910796a2a7.png",
+      "preview": "K7.webp",
+      "note": ""
+    },
+    {
+      "id": "K8",
+      "job_id": "59cc4dfa-440f-4df8-854b-f87c82de83c7",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_134910_59cc4dfa-440f-4df8-854b-f87c82de83c7.png",
+      "preview": "K8.webp",
+      "note": ""
+    }
+  ],
+  "overview": "uebersicht_K0-K8.jpg"
+}

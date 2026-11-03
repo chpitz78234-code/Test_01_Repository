@@ -49,14 +49,14 @@
       "variant": 1,
       "job_id": "cdb22d3d-2324-4bb2-b2c1-04e59d5575d0",
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_131455_cdb22d3d-2324-4bb2-b2c1-04e59d5575d0.png",
-      "selected": true
+      "selected": false
     },
     {
       "ref": "R_ICON2",
       "variant": 2,
       "job_id": "e88acfe7-f36b-47cd-afa2-40d2d989912d",
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3A4713h7QryWtkhCteuqb2NQV4S/hf_20261103_131452_e88acfe7-f36b-47cd-afa2-40d2d989912d.png",
-      "selected": false
+      "selected": true
     },
     {
       "ref": "R_ICON3",
