@@ -6,11 +6,13 @@ Schwarz, wie in der Referenz.
 
 ![Vorschau Frame 140](preview/frame_140.png)
 
+Animierte Vorschau (niedrige Auflösung, jedes 3. Frame): [`preview/vorschau.gif`](preview/vorschau.gif)
+
 | Datei | Inhalt |
 |---|---|
 | `leuchtkugel_glitzerspur.blend` | fertige Szene, direkt öffnen und rendern (erstellt mit Blender 5.2 LTS) |
 | `create_scene.py` | erzeugt die Szene komplett neu (für andere Blender-Versionen oder nach Experimenten) |
-| `preview/` | Test-Renders (Frames 40 / 96 / 140) |
+| `preview/` | Test-Renders (Frames 40 / 96 / 140) und animierte Vorschau `vorschau.gif` |
 
 ## Aufbau der Szene
 
