@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Videovollautomat Signet">
+<title>Videovollautomat Signet</title>
+
+<g transform="translate(4 0) scale(1.0)" stroke-linejoin="round" stroke-linecap="round">
+<rect x="96" y="60" width="336" height="420" rx="30" fill="#000000"/>
+<rect x="72" y="36" width="336" height="420" rx="30" fill="#FFC900" stroke="#000000" stroke-width="14"/>
+<rect x="112" y="76" width="256" height="184" rx="14" fill="#FF90E8" stroke="#000000" stroke-width="14"/>
+<path d="M210 122 L298 168 L210 214 Z" fill="#FFFFFF" stroke="#000000" stroke-width="14"/>
+<circle cx="138" cy="102" r="7" fill="#000000" stroke="none"/>
+<path d="M150.0 288.0 L155.9 288.6 L158.3 298.0 L162.0 300.0 L171.2 296.8 L174.9 301.3 L170.0 309.7 L171.2 313.8 L180.0 318.0 L179.4 323.9 L170.0 326.3 L168.0 330.0 L171.2 339.2 L166.7 342.9 L158.3 338.0 L154.2 339.2 L150.0 348.0 L144.1 347.4 L141.7 338.0 L138.0 336.0 L128.8 339.2 L125.1 334.7 L130.0 326.3 L128.8 322.2 L120.0 318.0 L120.6 312.1 L130.0 309.7 L132.0 306.0 L128.8 296.8 L133.3 293.1 L141.7 298.0 L145.8 296.8 Z" fill="#90A8ED" stroke="#000000" stroke-width="11.200000000000001"/><circle cx="150" cy="318" r="8.4" fill="#000000"/>
+<rect x="214" y="298" width="64" height="40" rx="10" fill="#23A094" stroke="#000000" stroke-width="14"/>
+<rect x="296" y="298" width="72" height="40" rx="10" fill="#FF7051" stroke="#000000" stroke-width="14"/>
+<rect x="132" y="376" width="216" height="34" rx="10" fill="#000000" stroke="#000000" stroke-width="14"/>
+<rect x="176" y="392" width="128" height="104" rx="6" fill="#000000" stroke="#000000" stroke-width="8.4"/>
+<rect x="184" y="406" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="284" y="406" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="184" y="428" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="284" y="428" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="184" y="450" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="284" y="450" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="184" y="472" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="284" y="472" width="12" height="10" rx="2" fill="#F4F4F0"/>
+<rect x="206" y="418" width="68" height="60" rx="4" fill="#FF90E8"/>
+</g>
+</svg>
