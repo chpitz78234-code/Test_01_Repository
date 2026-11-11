@@ -61,7 +61,7 @@ const CONFIG = {
   firstBoxX: 70,        // linke Kante von Box 1
   gap: 10,              // Abstand zwischen den Stelen
   boxes: [
-    { name: "Box 1", h: 100, w: 85 },
+    { name: "Box 1", h: 100, w: 65 },
     { name: "Box 2", h: 100, w: 45 },
     { name: "Box 3", h: 75,  w: 40 },
     { name: "Box 4", h: 50,  w: 30 },
@@ -168,7 +168,7 @@ function smoothClosedPath(pts) {
 }
 const k = CONFIG.personHeight / 180;
 el("ellipse", { cx: CONFIG.personX + 3, cy: 0.6, rx: 20, ry: 2.2, fill: "#000", opacity: 0.18, filter: "url(#soft)" });
-const person = el("g", { id: "person", transform: `translate(${CONFIG.personX} ${-CONFIG.personHeight}) scale(${k})`, fill: "var(--person)" });
+const person = el("g", { id: "person", transform: `translate(${CONFIG.personX} ${-CONFIG.personHeight}) scale(${k})`, fill: "var(--person)", opacity: 0.55 });
 el("ellipse", { cx: 0, cy: 11.5, rx: 8, ry: 11.5 }, person);   // Kopf: Scheitel exakt bei y = 0
 el("path", { d: smoothClosedPath(outline) }, person);
 
