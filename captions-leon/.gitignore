@@ -3,3 +3,4 @@ export/*_f[0-9]*.png
 fonts/*.otf
 fonts/*.ttf
 export/*_ProRes4444.mov
+__pycache__/
