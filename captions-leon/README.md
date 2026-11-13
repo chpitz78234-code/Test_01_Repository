@@ -53,7 +53,7 @@ python3 tools/render_captions.py --still 600 --still-bg             # Einzelbild
 Kompakte Master aus dem ProRes-Export:
 
 ```bash
-ffmpeg -i export/Leon_Captions_9x16_ProRes4444.mov -c:v prores_ks -profile:v 4444 -pix_fmt yuva444p10le -alpha_bits 8 -qscale:v 13 -vendor apl0 export/Leon_Captions_9x16_ProRes4444_compact.mov
+ffmpeg -i export/Leon_Captions_9x16_ProRes4444.mov -c:v prores_ks -profile:v 4444 -pix_fmt yuva444p10le -alpha_bits 8 -qscale:v 13 -vendor apl0 -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 export/Leon_Captions_9x16_ProRes4444_compact.mov
 ```
 
 ```bash
@@ -73,3 +73,10 @@ Alle Korrekturen stehen in `tools/build_captions.py` (`FIXES`, `DROP`, `SPEAKERS
   „für für“, „viel, viel“, „Team Teamarbeit“); die Zeit geht an das Nachbarwort
 - Sprecherwechsel Interviewer/Leon von Hand zugeordnet. Der Schlussteil
   („Also zusammenfassend …“) ist Leon zugeordnet.
+
+## Hinweis Premiere: Weiß wirkt grau
+
+Die ersten ProRes-Exporte hatten keine Farbraum-Tags und waren mit der BT.601-Matrix
+kodiert. Premiere kann Weiß dann als Grau (ca. 92 %) anzeigen. Der Renderer schreibt jetzt
+Rec.709-Tags (BT.709, Videopegel). Für den bereits ausgelieferten Export gibt es
+`Leon_Captions_9x16_ProRes4444_Rec709.mov`.

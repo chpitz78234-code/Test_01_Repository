@@ -47,6 +47,8 @@ STYLE = {
     "scale_from": 0.90,
 }
 
+TAGS709 = ["-color_range", "tv", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709"]
+
 FORMATS = {
     "9x16": {"w": 1080, "h": 1920, "size_a": 72, "size_q": 54, "max_w": 940, "bottom": 1500},
     "16x9": {"w": 1920, "h": 1080, "size_a": 64, "size_q": 48, "max_w": 1200, "bottom": 975},
@@ -427,22 +429,23 @@ def main():
     webm = out / f"{tag}_alpha.webm"
     prev = out / f"{tag}_preview.mp4"
     n_out = 1 + (not args.no_webm) + (not args.no_preview)
-    fc = f"[0:v]split={n_out}" + "".join(f"[v{i}]" for i in range(n_out)) + ";"
+    # RGB -> Rec.709 video range once, so every export is tagged and decodes to pure white
+    fc = f"[0:v]scale=out_color_matrix=bt709:out_range=tv,format=yuva444p10le,split={n_out}" + "".join(f"[v{i}]" for i in range(n_out)) + ";"
     cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error", "-stats",
            "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W}x{H}", "-r", str(fps), "-i", "-"]
     maps, i = [], 0
     maps += ["-map", f"[v{i}]", "-c:v", "prores_ks", "-profile:v", "4444", "-pix_fmt", "yuva444p10le",
-             "-alpha_bits", "16", "-vendor", "apl0", "-r", str(fps), str(mov)]
+             "-alpha_bits", "16", "-vendor", "apl0", "-r", str(fps), *TAGS709, str(mov)]
     i += 1
     if not args.no_webm:
         maps += ["-map", f"[v{i}]", "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", "32",
                  "-deadline", "realtime", "-cpu-used", "8", "-row-mt", "1", "-auto-alt-ref", "0",
-                 "-r", str(fps), str(webm)]
+                 "-r", str(fps), *TAGS709, str(webm)]
         i += 1
     if not args.no_preview:
         cmd += ["-f", "lavfi", "-i", f"color=c=0x5f666e:s={W}x{H}:r={fps}"]
         fc += f"[1:v][v{i}]overlay=shortest=1,format=yuv420p[pv];"
-        maps += ["-map", "[pv]", "-c:v", "libx264", "-crf", "20", "-preset", "veryfast", str(prev)]
+        maps += ["-map", "[pv]", "-c:v", "libx264", "-crf", "20", "-preset", "veryfast", *TAGS709, str(prev)]
     cmd += ["-filter_complex", fc.rstrip(";")] + maps
 
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
