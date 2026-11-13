@@ -1,0 +1,670 @@
+{
+  "fps": 60,
+  "source": "transkript_leon.txt",
+  "turns": [
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 0,
+          "end": 89,
+          "text": "Leon, du"
+        },
+        {
+          "start": 89,
+          "end": 120,
+          "text": "machst was"
+        },
+        {
+          "start": 120,
+          "end": 140,
+          "text": "für eine"
+        },
+        {
+          "start": 140,
+          "end": 159,
+          "text": "Ausbildung"
+        },
+        {
+          "start": 159,
+          "end": 168,
+          "text": "hier"
+        },
+        {
+          "start": 168,
+          "end": 207,
+          "text": "bei Renfert?"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 207,
+          "end": 244,
+          "text": "Ich mache den"
+        },
+        {
+          "start": 244,
+          "end": 292,
+          "text": "Fachlageristen"
+        },
+        {
+          "start": 292,
+          "end": 316,
+          "text": "und bin"
+        },
+        {
+          "start": 316,
+          "end": 343,
+          "text": "im ersten"
+        },
+        {
+          "start": 343,
+          "end": 390,
+          "text": "Lehrjahr."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 390,
+          "end": 414,
+          "text": "Was sind"
+        },
+        {
+          "start": 414,
+          "end": 471,
+          "text": "deine Aufgaben?"
+        },
+        {
+          "start": 471,
+          "end": 500,
+          "text": "Erklär mal"
+        },
+        {
+          "start": 500,
+          "end": 510,
+          "text": "so ein"
+        },
+        {
+          "start": 510,
+          "end": 577,
+          "text": "bisschen."
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 577,
+          "end": 603,
+          "text": "Also bis jetzt"
+        },
+        {
+          "start": 603,
+          "end": 642,
+          "text": "habe ich"
+        },
+        {
+          "start": 642,
+          "end": 692,
+          "text": "viel gemacht."
+        },
+        {
+          "start": 692,
+          "end": 721,
+          "text": "Ich war auch schon"
+        },
+        {
+          "start": 721,
+          "end": 770,
+          "text": "in verschiedenen Werken."
+        },
+        {
+          "start": 770,
+          "end": 795,
+          "text": "Jedes Werk"
+        },
+        {
+          "start": 795,
+          "end": 817,
+          "text": "hat seine"
+        },
+        {
+          "start": 817,
+          "end": 831,
+          "text": "eigene"
+        },
+        {
+          "start": 831,
+          "end": 858,
+          "text": "Bedeutung."
+        },
+        {
+          "start": 858,
+          "end": 884,
+          "text": "Zum Beispiel"
+        },
+        {
+          "start": 884,
+          "end": 916,
+          "text": "Werk 5:"
+        },
+        {
+          "start": 916,
+          "end": 973,
+          "text": "Warenannahme,"
+        },
+        {
+          "start": 973,
+          "end": 1021,
+          "text": "Werk 1:"
+        },
+        {
+          "start": 1021,
+          "end": 1100,
+          "text": "Produktionslager."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 1100,
+          "end": 1165,
+          "text": "Welche Teile"
+        },
+        {
+          "start": 1165,
+          "end": 1189,
+          "text": "werden hier"
+        },
+        {
+          "start": 1189,
+          "end": 1223,
+          "text": "gelagert?"
+        },
+        {
+          "start": 1223,
+          "end": 1259,
+          "text": "Woher kommen"
+        },
+        {
+          "start": 1259,
+          "end": 1285,
+          "text": "die Teile"
+        },
+        {
+          "start": 1285,
+          "end": 1379,
+          "text": "und wohin gehen"
+        },
+        {
+          "start": 1379,
+          "end": 1420,
+          "text": "die Teile?"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 1420,
+          "end": 1451,
+          "text": "Also wir haben"
+        },
+        {
+          "start": 1451,
+          "end": 1475,
+          "text": "Teile hier"
+        },
+        {
+          "start": 1475,
+          "end": 1503,
+          "text": "im Lager"
+        },
+        {
+          "start": 1503,
+          "end": 1523,
+          "text": "für"
+        },
+        {
+          "start": 1523,
+          "end": 1556,
+          "text": "die Produkte,"
+        },
+        {
+          "start": 1556,
+          "end": 1563,
+          "text": "die"
+        },
+        {
+          "start": 1563,
+          "end": 1613,
+          "text": "wir verkaufen."
+        },
+        {
+          "start": 1613,
+          "end": 1654,
+          "text": "Die gehen"
+        },
+        {
+          "start": 1654,
+          "end": 1711,
+          "text": "in die Produktion."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 1711,
+          "end": 1738,
+          "text": "Was sind das hier für"
+        },
+        {
+          "start": 1738,
+          "end": 1805,
+          "text": "Werkzeuge,"
+        },
+        {
+          "start": 1805,
+          "end": 1827,
+          "text": "mit denen"
+        },
+        {
+          "start": 1827,
+          "end": 1887,
+          "text": "du arbeitest?"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 1887,
+          "end": 1961,
+          "text": "Hauptsächlich"
+        },
+        {
+          "start": 1961,
+          "end": 1990,
+          "text": "arbeite ich"
+        },
+        {
+          "start": 1990,
+          "end": 2035,
+          "text": "mit der Ameise"
+        },
+        {
+          "start": 2035,
+          "end": 2091,
+          "text": "und Hubwagen,"
+        },
+        {
+          "start": 2091,
+          "end": 2136,
+          "text": "Tablet,"
+        },
+        {
+          "start": 2136,
+          "end": 2180,
+          "text": "Scanner."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 2180,
+          "end": 2207,
+          "text": "Im Laufe"
+        },
+        {
+          "start": 2207,
+          "end": 2236,
+          "text": "der Ausbildung"
+        },
+        {
+          "start": 2236,
+          "end": 2255,
+          "text": "wirst du"
+        },
+        {
+          "start": 2255,
+          "end": 2299,
+          "text": "dann den"
+        },
+        {
+          "start": 2299,
+          "end": 2359,
+          "text": "Staplerführerschein"
+        },
+        {
+          "start": 2359,
+          "end": 2374,
+          "text": "machen."
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 2374,
+          "end": 2387,
+          "text": "Also"
+        },
+        {
+          "start": 2387,
+          "end": 2414,
+          "text": "den Staplerschein"
+        },
+        {
+          "start": 2414,
+          "end": 2430,
+          "text": "habe ich"
+        },
+        {
+          "start": 2430,
+          "end": 2454,
+          "text": "schon, aber"
+        },
+        {
+          "start": 2454,
+          "end": 2542,
+          "text": "den Hochregalstapler darf"
+        },
+        {
+          "start": 2542,
+          "end": 2568,
+          "text": "man erst ab"
+        },
+        {
+          "start": 2568,
+          "end": 2605,
+          "text": "18 machen."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 2605,
+          "end": 2642,
+          "text": "Das ist jetzt"
+        },
+        {
+          "start": 2642,
+          "end": 2651,
+          "text": "ein"
+        },
+        {
+          "start": 2651,
+          "end": 2719,
+          "text": "Hochregalstapler,"
+        },
+        {
+          "start": 2719,
+          "end": 2740,
+          "text": "das heißt,"
+        },
+        {
+          "start": 2740,
+          "end": 2761,
+          "text": "du wirst"
+        },
+        {
+          "start": 2761,
+          "end": 2788,
+          "text": "innerhalb von"
+        },
+        {
+          "start": 2788,
+          "end": 2797,
+          "text": "deiner"
+        },
+        {
+          "start": 2797,
+          "end": 2831,
+          "text": "Ausbildungszeit"
+        },
+        {
+          "start": 2831,
+          "end": 2872,
+          "text": "hier 18"
+        },
+        {
+          "start": 2872,
+          "end": 2893,
+          "text": "und dann"
+        },
+        {
+          "start": 2893,
+          "end": 2915,
+          "text": "wird dieser"
+        },
+        {
+          "start": 2915,
+          "end": 2934,
+          "text": "Schein hier"
+        },
+        {
+          "start": 2934,
+          "end": 2953,
+          "text": "auch in der"
+        },
+        {
+          "start": 2953,
+          "end": 2975,
+          "text": "Ausbildung"
+        },
+        {
+          "start": 2975,
+          "end": 3006,
+          "text": "gemacht."
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 3006,
+          "end": 3023,
+          "text": "Ja."
+        }
+      ]
+    },
+    {
+      "speaker": "Q",
+      "name": "Interviewer",
+      "chunks": [
+        {
+          "start": 3023,
+          "end": 3054,
+          "text": "Was macht dir"
+        },
+        {
+          "start": 3054,
+          "end": 3073,
+          "text": "am meisten"
+        },
+        {
+          "start": 3073,
+          "end": 3107,
+          "text": "Spaß,"
+        },
+        {
+          "start": 3107,
+          "end": 3124,
+          "text": "bisher"
+        },
+        {
+          "start": 3124,
+          "end": 3155,
+          "text": "in der Ausbildung?"
+        }
+      ]
+    },
+    {
+      "speaker": "A",
+      "name": "Leon",
+      "chunks": [
+        {
+          "start": 3155,
+          "end": 3169,
+          "text": "Also,"
+        },
+        {
+          "start": 3169,
+          "end": 3188,
+          "text": "eigentlich"
+        },
+        {
+          "start": 3188,
+          "end": 3212,
+          "text": "gefällt mir"
+        },
+        {
+          "start": 3212,
+          "end": 3264,
+          "text": "alles."
+        },
+        {
+          "start": 3264,
+          "end": 3276,
+          "text": "Also"
+        },
+        {
+          "start": 3276,
+          "end": 3305,
+          "text": "es gibt keine"
+        },
+        {
+          "start": 3305,
+          "end": 3351,
+          "text": "negativen Punkte,"
+        },
+        {
+          "start": 3351,
+          "end": 3363,
+          "text": "die ich"
+        },
+        {
+          "start": 3363,
+          "end": 3372,
+          "text": "jetzt"
+        },
+        {
+          "start": 3372,
+          "end": 3391,
+          "text": "aufzählen"
+        },
+        {
+          "start": 3391,
+          "end": 3415,
+          "text": "könnte."
+        },
+        {
+          "start": 3415,
+          "end": 3442,
+          "text": "Also"
+        },
+        {
+          "start": 3442,
+          "end": 3489,
+          "text": "zusammenfassend"
+        },
+        {
+          "start": 3489,
+          "end": 3507,
+          "text": "ein sehr"
+        },
+        {
+          "start": 3507,
+          "end": 3534,
+          "text": "praktischer"
+        },
+        {
+          "start": 3534,
+          "end": 3558,
+          "text": "Beruf,"
+        },
+        {
+          "start": 3558,
+          "end": 3568,
+          "text": "sehr"
+        },
+        {
+          "start": 3568,
+          "end": 3618,
+          "text": "abwechslungsreich."
+        },
+        {
+          "start": 3618,
+          "end": 3662,
+          "text": "Man hat"
+        },
+        {
+          "start": 3662,
+          "end": 3671,
+          "text": "mit"
+        },
+        {
+          "start": 3671,
+          "end": 3695,
+          "text": "verschiedenen"
+        },
+        {
+          "start": 3695,
+          "end": 3734,
+          "text": "Tools zu tun,"
+        },
+        {
+          "start": 3734,
+          "end": 3760,
+          "text": "viel"
+        },
+        {
+          "start": 3760,
+          "end": 3799,
+          "text": "Menschenkontakt"
+        },
+        {
+          "start": 3799,
+          "end": 3825,
+          "text": "und viel"
+        },
+        {
+          "start": 3825,
+          "end": 3883,
+          "text": "Teamarbeit."
+        }
+      ]
+    }
+  ]
+}

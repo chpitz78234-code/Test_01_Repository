@@ -4,3 +4,4 @@
 - [`motion-spec/motion-spec.json`](motion-spec/motion-spec.json): dieselbe Vorgabe maschinenlesbar (Farben, Typo, Easing, Timing, Übergänge)
 - [`motion-spec/reference/`](motion-spec/reference/): Frame-Belege aus den Referenzvideos
 - [`motion-spec/tools/analyze_motion.py`](motion-spec/tools/analyze_motion.py): vermisst Videos (Schnitte, Shotlängen, Bildraten-Muster, Beat-Abweichung)
+- [`captions-leon/`](captions-leon/): dynamische Captions (Renfert-Look, Alpha-Kanal) für das Azubi-Interview mit Leon
