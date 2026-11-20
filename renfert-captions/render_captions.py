@@ -155,8 +155,10 @@ class Caption:
         f = self.f
         for w in self.words:
             bb = f.getbbox(w["txt"])
-            m = Image.new("L", (int(bb[2]) + 8, int(bb[3]) + 8), 0)
-            ImageDraw.Draw(m).text((0, 0), w["txt"], font=f, fill=255)
+            top = max(0, -int(bb[1])) + 4      # Platz für Umlaut-Punkte über Versalien (Ö, Ä, Ü)
+            m = Image.new("L", (int(bb[2]) + 8, int(bb[3]) + 8 + top), 0)
+            ImageDraw.Draw(m).text((0, top), w["txt"], font=f, fill=255)
+            w["y"] -= top
             w["mask"] = m
             w["shadow"] = blur_mask(m, 7, 16)
         for b in self.boxes:
@@ -321,7 +323,7 @@ def main():
             f_out, hard = min(f_end_nat, n_frames), False
         sched.append((c, f_in, f_out, hard))
 
-    tags = [NameTag("Søren Haag", "CEO Renfert", 0.15, 3.55, fonts),
+    tags = [NameTag("Sören Hug", "CEO Renfert", 0.15, 3.55, fonts),
             NameTag("Sascha Hein", "Inventor eLAB System", 3.80, 6.85, fonts)]
 
     def cap_frame(fi):

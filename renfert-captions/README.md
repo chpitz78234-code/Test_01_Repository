@@ -6,7 +6,7 @@ Weiß + Renfert-Rot `#C8102E`, Schrift Netto Pro Black/Bold.
 | Datei | Inhalt |
 |---|---|
 | `output/Renfert_Captions_1080x1920_alpha_PNG.mov` | Captions, verlustfrei, Alpha (PNG-Codec) |
-| `output/Renfert_NameTags_1080x1920_alpha_PNG.mov` | Bauchbinden Søren Haag / Sascha Hein (0–7,5 s) |
+| `output/Renfert_NameTags_1080x1920_alpha_PNG.mov` | Bauchbinden Sören Hug / Sascha Hein (0–7,5 s) |
 | `output/Renfert_Captions.srt` | Gleicher Text als SRT |
 | `output/Vorschau_mit_Ton_540x960.mp4` | Kontrollvorschau mit Ton |
 
